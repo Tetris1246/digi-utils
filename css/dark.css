@@ -1,11 +1,3 @@
-/*
-A great part of this was stolen from
-the Stylish-Theme "Dark Digitales Register"
-by Denis Mignanelli.
-
-Thanks, Denis.
-*/
-
 @media (prefers-color-scheme: dark) {
     body,
     html,
@@ -448,154 +440,155 @@ Thanks, Denis.
     .ql-editor strong {
         color: #ffffff;
     }
-}
-.input-group-btn-hide-password {
-    background-color:#4a4a4a;
-    border-left:0px;
-    border-top-right-radius:4px;
-    border-bottom-right-radius:4px;
-}
-.message-list-picker-button {
-    background:#2c2c2c;
-    height:40px;
-    cursor:pointer
-}
-.message-list-picker-button:hover {
-    background-color:#292929
-}
-.message-list-tab-bar a {
-    background: #333;
-    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1);
-    color: #d5d5d5;
-}
-.message-list-tab-bar .message-list-picker-choose.inactive {
-    background:#2c2c2c;
-}
-.message-list-tab-bar .message-list-picker-choose.inactive:hover {
-    background-color:#292929
-}
-.container-message-item {
-    background: #333;
-    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1);
-    border-radius:5px;
-    margin:18px 0;
-    padding:8px 16px;
-    align-items:center;
-    flex-wrap:wrap
-}
-.message-list-subheader {
-    color:#f7f7f7
-}
-.cs-flex-table {
-    background:#292929;
-    transition:.5s;
-    cursor:pointer
-}
-.cs-flex-table.cs-row-marker:nth-child(odd) .cs-flex-row {
-    background:#292929
-}
-.summary-table {
-    width:100%;
-    border:none;
-    font-size:13px;
-    margin-bottom:10px;
-    background:#292929
-}
-.summary-table tr:nth-child(odd) {
-    background:#292929
-}
-.summary-table tr:hover {
-    background:#2c2c2c
-}
-.summary-table th {
-    background:#2c2c2c
-}
 
-.cs-flex-row-grade .grade {
-    border-radius:4px;
-    background:rgb(32, 32, 32);
-    border:0px solid #DBE0E6;
-    padding:4px 10px
-}
-.student-subject-item .badge-student-subject-competences {
-    color:#f7f7f7;
-    background: #434343
-}
-.student-subject-item .badge-student-subject-descriptions {
-    color:#f7f7f7;
-    background:#434343
-}
-.student-subject-item .badge-student-subject-observations {
-    color:#f7f7f7;
-    background:#434343
-}
-.tutorial-box {
-    background: #2a2a2a;
-    border:0px solid #DBE0E6;
-    border-radius:4px;
-    font-size:13px;
-    box-shadow:none;
-    color:#f7f7f7;
-    padding:10px 13px;
-    width:100%;
-    min-height:45px;
-    margin:20px 0;
-    display:flex;
-    align-items:center
-}
-.tutorial-box .tutorial-header-1 {
-    font-size:18px;
-    color:#f7f7f7
-}
+    .input-group-btn-hide-password {
+        background-color:#4a4a4a;
+        border-left:0px;
+        border-top-right-radius:4px;
+        border-bottom-right-radius:4px;
+    }
+    .message-list-picker-button {
+        background:#2c2c2c;
+        height:40px;
+        cursor:pointer
+    }
+    .message-list-picker-button:hover {
+        background-color:#292929
+    }
+    .message-list-tab-bar a {
+        background: #333;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1);
+        color: #d5d5d5;
+    }
+    .message-list-tab-bar .message-list-picker-choose.inactive {
+        background:#2c2c2c;
+    }
+    .message-list-tab-bar .message-list-picker-choose.inactive:hover {
+        background-color:#292929
+    }
+    .container-message-item {
+        background: #333;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1);
+        border-radius:5px;
+        margin:18px 0;
+        padding:8px 16px;
+        align-items:center;
+        flex-wrap:wrap
+    }
+    .message-list-subheader {
+        color:#f7f7f7
+    }
+    .cs-flex-table {
+        background:#292929;
+        transition:.5s;
+        cursor:pointer
+    }
+    .cs-flex-table.cs-row-marker:nth-child(odd) .cs-flex-row {
+        background:#292929
+    }
+    .summary-table {
+        width:100%;
+        border:none;
+        font-size:13px;
+        margin-bottom:10px;
+        background:#292929
+    }
+    .summary-table tr:nth-child(odd) {
+        background:#292929
+    }
+    .summary-table tr:hover {
+        background:#2c2c2c
+    }
+    .summary-table th {
+        background:#2c2c2c
+    }
+
+    .cs-flex-row-grade .grade {
+        border-radius:4px;
+        background:rgb(32, 32, 32);
+        border:0px solid #DBE0E6;
+        padding:4px 10px
+    }
+    .student-subject-item .badge-student-subject-competences {
+        color:#f7f7f7;
+        background: #434343
+    }
+    .student-subject-item .badge-student-subject-descriptions {
+        color:#f7f7f7;
+        background:#434343
+    }
+    .student-subject-item .badge-student-subject-observations {
+        color:#f7f7f7;
+        background:#434343
+    }
+    .tutorial-box {
+        background: #2a2a2a;
+        border:0px solid #DBE0E6;
+        border-radius:4px;
+        font-size:13px;
+        box-shadow:none;
+        color:#f7f7f7;
+        padding:10px 13px;
+        width:100%;
+        min-height:45px;
+        margin:20px 0;
+        display:flex;
+        align-items:center
+    }
+    .tutorial-box .tutorial-header-1 {
+        font-size:18px;
+        color:#f7f7f7
+    }
 
 
-.badge-grade-group-online,
-.badge-grade-group-students {
-    border-radius:12px;
-    display:inline-block;
-    color:#FFF;
-    padding:0 10px;
-    font-size:12px
-}
-.badge-grade-group-students {
-    background:#434343
-}
-.badge-grade-group-online {
-    background:#434343
-}
-.badge-homework-exam-type {
-    display:inline-block;
-    color:#FFF;
-    border:0;
-    background:#434343;
-    padding:0 10px;
-    font-size:12px;
-    border-radius:4px;
-    margin-right:12px
-}
-.badge-lesson-content-type {
-    display:inline-block;
-    color:#FFF;
-    border:0;
-    background:#434343;
-    padding:0 10px;
-    font-size:12px;
-    border-radius:4px;
-    margin-right:12px
-}
+    .badge-grade-group-online,
+    .badge-grade-group-students {
+        border-radius:12px;
+        display:inline-block;
+        color:#FFF;
+        padding:0 10px;
+        font-size:12px
+    }
+    .badge-grade-group-students {
+        background:#434343
+    }
+    .badge-grade-group-online {
+        background:#434343
+    }
+    .badge-homework-exam-type {
+        display:inline-block;
+        color:#FFF;
+        border:0;
+        background:#434343;
+        padding:0 10px;
+        font-size:12px;
+        border-radius:4px;
+        margin-right:12px
+    }
+    .badge-lesson-content-type {
+        display:inline-block;
+        color:#FFF;
+        border:0;
+        background:#434343;
+        padding:0 10px;
+        font-size:12px;
+        border-radius:4px;
+        margin-right:12px
+    }
 
-.ql-container blockquote,
-.ql-container li,
-.ql-container p,
-.ql-container ul,
-.ql-editor blockquote,
-.ql-editor li,
-.ql-editor p,
-.ql-editor ul {
-    color: #f7f7f7;
-}
+    .ql-container blockquote,
+    .ql-container li,
+    .ql-container p,
+    .ql-container ul,
+    .ql-editor blockquote,
+    .ql-editor li,
+    .ql-editor p,
+    .ql-editor ul {
+        color: #f7f7f7;
+    }
 
-/*has nothing to do with color scheme, but god damnit that scroll bar was annoying*/
-.v2-main-navigation {
-    overflow: auto;
+    /*has nothing to do with color scheme, but god damnit that scroll bar was annoying*/
+    .v2-main-navigation {
+        overflow: auto;
+    }
 }

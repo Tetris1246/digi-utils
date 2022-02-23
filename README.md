@@ -6,8 +6,9 @@ Feel free to report issues or request new features.
 
 Features:
 - dark theme
+- grade average
 
 To-Do:
-- grade average
-- english language setting
-- submit extension to addons.mozilla.org
+- language settings
+- report card average
+- toggle features on/off
