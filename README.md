@@ -7,8 +7,10 @@ Feel free to report issues or request new features.
 Features:
 - dark theme
 - grade average
+- toggle features on/off
 
 To-Do:
 - language settings
 - report card average
-- toggle features on/off
+- multiple color themes
+- auto login

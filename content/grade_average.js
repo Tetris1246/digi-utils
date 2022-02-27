@@ -1,4 +1,8 @@
-console.log("loaded grade_average.js");
+console.log("digi-utils> grade_average.js loaded");
+
+function handleRejection(message) {
+    console.log(message);
+}
 
 // https://stackoverflow.com/questions/7193238/wait-until-a-condition-is-true
 // test: function that returns a value
@@ -109,16 +113,19 @@ function calculate_grades() {
     let year_span = document.createElement("span");
     year_span.innerHTML = "Jahr " + avg_year.toFixed(2);
     year_span.style.marginRight = "30px";
-    year_span.style.fontSize = "20px";
+    year_span.style.fontSize = "15px";
     let total_span = document.createElement("span");
     total_span.innerHTML = "Gesamt " + avg_total.toFixed(2);
-    total_span.style.fontSize = "20px";
+    total_span.style.fontSize = "15px";
     grade_average = document.createElement("h1");
+    grade_average.style.fontSize = "25px";
+    grade_average.className = "h1";
+    grade_average.style.margin = "0";
+    grade_average.style.marginTop = "15px";
     grade_average.innerHTML = "Ø ";
     grade_average.appendChild(semester_span);
     grade_average.appendChild(year_span);
     grade_average.appendChild(total_span);
-    grade_average.style.fontSize = "30px";
     stats.appendChild(grade_average);
 }
 
@@ -132,17 +139,38 @@ function subjects_are_loaded() {
     return false;
 }
 
-// if the grades-button is clicked, wait for the grades to load
-document.getElementsByClassName("v2-main-navigation main-navigation-show-mobile")[0].childNodes[6].onclick = function(){
-    waitfor(subjects_are_loaded, true, 50, function() {
-        calculate_grades();
-    });
-};
+function enableGradeAverage() {
+    // if the grades-button is clicked, wait for the grades to load
+    if (!document.location.href.endsWith("login")) {
+        document.getElementsByClassName("v2-main-navigation main-navigation-show-mobile")[0].childNodes[6].onclick = function () {
+            waitfor(subjects_are_loaded, true, 50, function () {
+                calculate_grades();
+            });
+        };
+    }
 
-// do one grade calculation, in case the user navigates to the subjects-page via link or refresh
-if (document.location.href.endsWith("#student/subjects")) {
-    waitfor(subjects_are_loaded, true, 50, function() {
-        calculate_grades();
-    });
+    // do one grade calculation, in case the user navigates to the subjects-page via link or refresh
+    if (document.location.href.endsWith("#student/subjects")) {
+        waitfor(subjects_are_loaded, true, 50, function() {
+            calculate_grades();
+        });
+    }
 }
 
+
+
+// send a message requesting the average setting, resolve the promise once response is recieved
+const loadAverageSetting = new Promise((resolve, reject) => {
+    function handleResponse(message) {
+        if (message.response === true) resolve();
+        else reject('average is false');
+    }
+    function handleError(error) {
+        reject(error);
+    }
+    let sending = browser.runtime.sendMessage({setting: "average"});
+    sending.then(handleResponse, handleError);
+});
+
+// if loadAverageSetting resolves the promise, enable grade average loading
+loadAverageSetting.then(enableGradeAverage, handleRejection);

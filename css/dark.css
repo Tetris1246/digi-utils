@@ -13,7 +13,7 @@
     }
     .h1,
     .h2 {
-        color: #f7f7f7;
+        color: #d5d5d5;
     }
     label {
         color: #b8c7e4;
@@ -103,7 +103,7 @@
         background: #303030;
     }
     .student-subject-item .student-name {
-        color: #d7e0f5;
+        color: #d5d5d5;
     }
     .grade {
         color: #37cc8b;
@@ -145,7 +145,7 @@
         color: #b9b9b9;
     }
     .uib-datepicker-popup button .text-info {
-        color: #ffffff;
+        color: #d5d5d5;
     }
     .modal label {
         color: #c5d1e7;
@@ -433,12 +433,12 @@
     }
     a.grade-detail-type:hover {
         background-color: #2c2c2c;
-        color: #ffffff;
+        color: #d5d5d5;
         border-radius: 6px;
     }
     .ql-container strong,
     .ql-editor strong {
-        color: #ffffff;
+        color: #d5d5d5;
     }
 
     .input-group-btn-hide-password {
@@ -476,7 +476,7 @@
         flex-wrap:wrap
     }
     .message-list-subheader {
-        color:#f7f7f7
+        color:#d5d5d5
     }
     .cs-flex-table {
         background:#292929;
@@ -510,44 +510,28 @@
         padding:4px 10px
     }
     .student-subject-item .badge-student-subject-competences {
-        color:#f7f7f7;
+        color:#d5d5d5;
         background: #434343
     }
     .student-subject-item .badge-student-subject-descriptions {
-        color:#f7f7f7;
+        color:#d5d5d5;
         background:#434343
     }
     .student-subject-item .badge-student-subject-observations {
-        color:#f7f7f7;
+        color:#d5d5d5;
         background:#434343
     }
     .tutorial-box {
         background: #2a2a2a;
-        border:0px solid #DBE0E6;
-        border-radius:4px;
-        font-size:13px;
-        box-shadow:none;
-        color:#f7f7f7;
-        padding:10px 13px;
-        width:100%;
-        min-height:45px;
-        margin:20px 0;
-        display:flex;
-        align-items:center
+        border:0;
     }
     .tutorial-box .tutorial-header-1 {
         font-size:18px;
-        color:#f7f7f7
+        color:#d5d5d5
     }
-
-
     .badge-grade-group-online,
     .badge-grade-group-students {
-        border-radius:12px;
-        display:inline-block;
-        color:#FFF;
-        padding:0 10px;
-        font-size:12px
+        color:#d5d5d5;
     }
     .badge-grade-group-students {
         background:#434343
@@ -556,26 +540,15 @@
         background:#434343
     }
     .badge-homework-exam-type {
-        display:inline-block;
-        color:#FFF;
+        color:#d5d5d5;
         border:0;
         background:#434343;
-        padding:0 10px;
-        font-size:12px;
-        border-radius:4px;
-        margin-right:12px
     }
     .badge-lesson-content-type {
-        display:inline-block;
-        color:#FFF;
+        color:#d5d5d5;
         border:0;
         background:#434343;
-        padding:0 10px;
-        font-size:12px;
-        border-radius:4px;
-        margin-right:12px
     }
-
     .ql-container blockquote,
     .ql-container li,
     .ql-container p,
@@ -584,7 +557,7 @@
     .ql-editor li,
     .ql-editor p,
     .ql-editor ul {
-        color: #f7f7f7;
+        color: #d5d5d5;
     }
 
     /*has nothing to do with color scheme, but god damnit that scroll bar was annoying*/
