@@ -1,0 +1,42 @@
+{
+  "manifest_version": 2,
+  "name": "Digi-Utils",
+  "version": "1.2",
+
+  "description": "Various Utilities for digitalesregister.it",
+
+  "icons": {
+    "32": "icons/icon-32.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.digitalesregister.it/*"],
+      "js": ["content/grade_average.js", "content/color_theme.js"],
+      "run-at": "document_end"
+    }
+  ],
+
+  "background": {
+    "scripts": ["background/background.js"]
+  },
+
+  "browser_action": {
+    "default_icon": {
+      "32": "icons/icon-32.png",
+      "128": "icons/icon-128.png"
+    },
+    "default_title": "Digi-Utils",
+    "default_popup": "popup/popup.html"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "web_accessible_resources": [
+    "css/*"
+  ]
+}
+

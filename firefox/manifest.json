@@ -6,7 +6,8 @@
   "description": "Various Utilities for digitalesregister.it",
 
   "icons": {
-    "32": "icons/button-32.png"
+    "32": "icons/icon-32.png",
+    "128": "icons/icon-128.png"
   },
 
   "content_scripts": [
@@ -23,7 +24,8 @@
 
   "browser_action": {
     "default_icon": {
-      "32": "icons/button-32.png"
+      "32": "icons/icon-32.png",
+      "128": "icons/icon-128.png"
     },
     "default_title": "Digi-Utils",
     "default_popup": "popup/popup.html"
