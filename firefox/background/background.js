@@ -9,6 +9,7 @@ var digi_settings = {
     dark: true,
     average: true,
     religion: true,
+    antiafk: true,
     report: true,
     login: false
 }
