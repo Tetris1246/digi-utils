@@ -8,10 +8,10 @@ function onError(error) {
 var digi_settings = {
     dark: true,
     average: true,
-    religion: true,
     antiafk: true,
     report: true,
-    login: false
+    login: false,
+    icons: true
 }
 function checkStoredSettings(storedSettings) {
     if (!storedSettings.digi_settings) {

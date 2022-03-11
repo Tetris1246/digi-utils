@@ -8,8 +8,7 @@ function handleRejection(message) {
 function loadAntiAfk() {
     if (!document.location.href.endsWith("login")) {
         setInterval(function () {
-            console.log("sent");
-            AutoLogout.checklogin();
+            window.wrappedJSObject.AutoLogout.trackAction();
         }, 60_000)
     }
 }
@@ -29,5 +28,3 @@ const loadAntiafkSetting = new Promise((resolve, reject) => {
 
 // if loadDarkSetting resolves the promise, load the dark theme
 loadAntiafkSetting.then(loadAntiAfk, handleRejection);
-
-
