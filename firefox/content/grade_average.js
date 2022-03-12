@@ -157,9 +157,7 @@ function enableGradeAverage() {
     }
 }
 
-
-
-// send a message requesting the average setting, resolve the promise once response is recieved
+// send a message requesting the average setting, resolve the promise once response is received
 const loadAverageSetting = new Promise((resolve, reject) => {
     function handleResponse(message) {
         if (message.response === true) resolve();

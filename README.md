@@ -15,10 +15,10 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 - grade average
 - toggle features on/off
 - anti-afk
+- fancy icons
 
 ##To-Do:
 - language settings
 - report card average
 - multiple color themes
 - auto login
-- fancy icons
