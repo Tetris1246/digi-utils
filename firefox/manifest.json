@@ -14,7 +14,7 @@
     {
       "matches": ["*://*.digitalesregister.it/*"],
       "js": ["content/grade_average.js", "content/color_theme.js", "content/anti_afk.js", "content/icons.js"],
-      "run-at": "document_end"
+      "run_at": "document_end"
     }
   ],
 
