@@ -4,9 +4,10 @@ console.log("digi-utils> background.js loaded")
 var digi_settings = {
     dark: true,
     average: true,
-    religion: true,
+    antiafk: true,
     report: true,
-    login: false
+    login: false,
+    icons: true
 }
 function checkStoredSettings(storedSettings) {
     if (!storedSettings.digi_settings) {
