@@ -1,4 +1,4 @@
-console.log("digi-utils> anti_afk.js loaded!");
+console.log("digi-utils> anti_afk.js loaded");
 
 function handleRejection(message) {
     console.log(message);

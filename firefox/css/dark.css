@@ -18,6 +18,16 @@
     label {
         color: #b8c7e4;
     }
+    .lesson-homework-exams-homework-card {
+        border: 1px solid #202020;
+        border-radius: 10px;
+        background: #282828;
+    }
+    .lesson-lesson-content-homework-card {
+        border: 1px solid #202020;
+        border-radius: 10px;
+        background: #2c2c2c;
+    }
     .v2-main-navigation {
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.35);
     }

@@ -1,9 +1,5 @@
 console.log("digi-utils> icons.js loaded");
 
-function handleRejection(message) {
-    console.log(message);
-}
-
 function loadIcons() {
     // icon css
     var head = document.getElementsByTagName('HEAD')[0];
@@ -12,7 +8,7 @@ function loadIcons() {
     var names = ["calendar", "dashboard", "register", "semester", "subjects", "absences", "homework", "messages", "course", "certificate"]
     
     for (const name1 of names) {
-        link.innerHTML += `.digi-icon-${name1}:before { background-image:url(${browser.runtime.getURL(`icons/${name1}.svg`)}) }`;
+        link.innerHTML += `.digi-icon-${name1}:before { background-image:url(${chrome.runtime.getURL(`icons/${name1}.svg`)}) }`;
     }
 
     head.appendChild(link);
@@ -36,17 +32,8 @@ function loadIcons() {
 }
 
 // send a message requesting the icon setting, resolve the promise once response is received
-const loadIconSetting = new Promise((resolve, reject) => {
-    function handleResponse(message) {
-        if (message.response === true) resolve();
-        else reject('fancy icons is not activated');
-    }
-    function handleError(error) {
-        reject(error);
-    }
-    let sending = browser.runtime.sendMessage({setting: "icons"});
-    sending.then(handleResponse, handleError);
-});
-
-// if loadIconSetting resolves the promise, load icons
-loadIconSetting.then(loadIcons, handleRejection);
+function handleResponse(message) {
+    if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
+    if (message.response === true) loadIcons();
+}
+chrome.runtime.sendMessage({setting: "icons"}, handleResponse);

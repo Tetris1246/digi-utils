@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>messages</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="337" height="723"></rect>
+        <filter x="-5.6%" y="-2.4%" width="111.3%" height="105.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.549160289   0 0 0 0 0.549160289   0 0 0 0 0.549160289  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-179.000000, -265.000000)">
+            <g id="Rectangle">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#424859" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+            <g id="noun_1215748_cc" transform="translate(183.000000, 271.000000)" fill-rule="nonzero">
+                <g id="Group">
+                    <path d="M0,3.25455736 L0,10.8023606 C0,12.625836 1.45416393,14.0799999 3.25455736,14.0799999 L14.726295,14.0799999 C16.5497704,14.0799999 18.0039343,12.625836 18.0039343,10.8254426 L18.0039343,3.25455736 C18.0039343,2.79291802 17.9116065,2.33127868 17.7269507,1.93888524 L12.2334426,6.92459013 C11.2870819,7.77862291 10.1560655,8.19409832 9.00196716,8.19409832 C7.84786881,8.19409832 6.69377046,7.77862291 5.77049177,6.92459013 L0.276983605,1.93888524 C0.0923278684,2.35436064 0,2.79291802 0,3.25455736 Z" id="Shape" fill="#FEA276"></path>
+                    <path d="M11.6102294,6.23213111 L17.2191474,1.15409835 C16.6190163,0.438557375 15.7188196,0 14.726295,0 L3.25455736,0 C2.26203277,0 1.36183606,0.438557375 0.784786881,1.15409835 L6.39370488,6.23213111 C7.89403274,7.59396717 10.1099016,7.61704914 11.6102294,6.23213111 Z" id="Shape" fill="#FDA275"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

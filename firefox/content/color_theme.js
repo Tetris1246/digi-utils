@@ -1,4 +1,4 @@
-console.log("digi-utils> color_theme.js loaded!");
+console.log("digi-utils> color_theme.js loaded");
 
 function handleRejection(message) {
     console.log(message);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="337" height="723"></rect>
+        <filter x="-5.6%" y="-2.4%" width="111.3%" height="105.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.549160289   0 0 0 0 0.549160289   0 0 0 0 0.549160289  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-42.000000, -263.000000)">
+            <g id="Rectangle">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#424859" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+            <path d="M55,267 C50.02945,267 46,271.029462 46,276.000006 C46,280.970493 50.02945,285 55,285 C59.97055,285 64,280.970493 64,276.000006 C64,271.029462 59.97055,267 55,267 Z M55,269.999998 C55.33138,269.999998 55.6,270.268618 55.6,270.599998 L55.6,275.400006 L59.8,275.400006 C60.13138,275.400006 60.4,275.668626 60.4,276.000006 C60.4,276.331386 60.13138,276.600006 59.8,276.600006 L55,276.600006 C54.66862,276.600006 54.4,276.331386 54.4,276.000006 L54.4,270.599998 C54.4,270.268618 54.66862,269.999998 55,269.999998 Z" id="Shape" fill="#FFA277" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>
