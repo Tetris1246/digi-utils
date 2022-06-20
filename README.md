@@ -10,14 +10,14 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 - Firefox: https://addons.mozilla.org/en-US/firefox/addon/digi-utils/
 - Chrome: [not yet submitted to Chrome Web Store]
 
-##Features:
+### Features:
 - dark theme
 - grade average
 - toggle features on/off
 - anti-afk
 - fancy icons
 
-##To-Do:
+### To-Do:
 - language settings
 - report card average
 - multiple color themes
