@@ -9,10 +9,10 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 ## Get the Extension:
 -  [Firefox <img src="chromium%20guides/firefox.png" height="15">](https://addons.mozilla.org/en-US/firefox/addon/digi-utils/)
 -  [Chrome <img src="chromium%20guides/Google%20Chrome/images/logo.png" height="15">](chromium%20guides/Google%20Chrome/chrome_guide.md)
--  [Edge <img src="chromium%20guides/Microsoft%20Edge/images/logo.png" height="15">](chromium%20guidesMicrosoft%20Edge/edge_guide.md)
--  [Brave <img src="chromium%20guides/Brave/images/logo.png" height="15">](chromium%20guidesBrave/brave_guide.md)
--  [Opera <img src="chromium%20guides/Opera/images/logo.png" height="15">](chromium%20guidesOpera/opera_guide.md)
--  [Opera GX <img src="chromium%20guides/Opera%20GX/images/logo.png" height="15">](chromium%20guidesOpera%20GX/opera_gx_guide.md)
+-  [Edge <img src="chromium%20guides/Microsoft%20Edge/images/logo.png" height="15">](chromium%20guides/Microsoft%20Edge/edge_guide.md)
+-  [Brave <img src="chromium%20guides/Brave/images/logo.png" height="15">](chromium%20guides/Brave/brave_guide.md)
+-  [Opera <img src="chromium%20guides/Opera/images/logo.png" height="15">](chromium%20guides/Opera/opera_guide.md)
+-  [Opera GX <img src="chromium%20guides/Opera%20GX/images/logo.png" height="15">](chromium%20guides/Opera%20GX/opera_gx_guide.md)
 -  [Internet Explorer <img src="chromium%20guides/IE.png" height="15">](https://youtu.be/dQw4w9WgXcQ)
 
 ### Features:
