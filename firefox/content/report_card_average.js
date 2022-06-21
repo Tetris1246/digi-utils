@@ -108,14 +108,14 @@ function get_average_grade() {
     add_row_to_table("Durchschnitt ohne Religion", average_without_religion);
 }
 
-function subjects_are_loaded() {
+function grades_are_loaded() {
         if (document.getElementsByTagName("td").length > 0) return true;
     return false;
 }
 
 function loadReportAverage() {
     if (document.location.href.endsWith("#student/certificate")) {
-        waitfor(subjects_are_loaded, true, 50, get_average_grade);
+        waitfor(grades_are_loaded, true, 50, get_average_grade);
     }
 }
 
