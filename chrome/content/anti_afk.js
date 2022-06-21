@@ -1,6 +1,5 @@
 console.log("digi-utils> anti_afk.js loaded");
 
-// load a stylesheet-link to dark.css into the html head
 function loadAntiAfk() {
     if (!document.location.href.endsWith("login")) {
         setInterval(function () {

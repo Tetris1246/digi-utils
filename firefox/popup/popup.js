@@ -27,8 +27,8 @@ for (const element of checkbox_map.values()) {
 function onGot(item) {
     checkbox_map.get("checkbox_dark").checked = item.digi_settings.dark;
     checkbox_map.get("checkbox_average").checked = item.digi_settings.average;
-    checkbox_map.get("checkbox_antiafk").checked = item.digi_settings.report;
-    checkbox_map.get("checkbox_report").checked = item.digi_settings.antiafk;
+    checkbox_map.get("checkbox_antiafk").checked = item.digi_settings.antiafk;
+    checkbox_map.get("checkbox_report").checked = item.digi_settings.report;
     checkbox_map.get("checkbox_login").checked = item.digi_settings.login;
     checkbox_map.get("checkbox_icons").checked = item.digi_settings.icons;
 }
