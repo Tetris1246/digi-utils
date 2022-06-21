@@ -1,5 +1,5 @@
 ## Installation guide for:
-# Opera GX <img src="images/logo.png" height="25">
+# <img src="images/logo.png" height="25"> Opera GX
 
 1. Download the extension from [here](https://codeload.github.com/menga-team/digi-utils/zip/refs/heads/main).
 
