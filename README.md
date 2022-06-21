@@ -16,9 +16,9 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 - toggle features on/off
 - anti-afk
 - fancy icons
+- report card average
 
 ### To-Do:
 - language settings
-- report card average
 - multiple color themes
 - auto login
