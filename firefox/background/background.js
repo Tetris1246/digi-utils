@@ -11,7 +11,11 @@ var digi_settings = {
     antiafk: true,
     report: true,
     login: false,
-    icons: true
+    icons: true,
+    logindata: {
+        username: "",
+        password: ""
+    }
 }
 function checkStoredSettings(storedSettings) {
     if (!storedSettings.digi_settings) {

@@ -1,17 +1,23 @@
 console.log("digi-utils> background.js loaded")
 
 // check if settings are already stored, if not set defaults
-var digi_settings = {
+var digi_settings_default = {
     dark: true,
     average: true,
     antiafk: true,
     report: true,
     login: false,
-    icons: true
+    icons: true,
+    logindata: {
+        username: "",
+        password: ""
+    }
 }
 function checkStoredSettings(storedSettings) {
-    if (!storedSettings.digi_settings) {
-        chrome.storage.local.set({digi_settings});
+    for (const item in storedSettings.digi_settings) {
+        if (!item in digi_settings_default) {
+            chrome.storage.local.set({digi_settings_default});
+        }
     }
 }
 chrome.storage.local.get(checkStoredSettings);
