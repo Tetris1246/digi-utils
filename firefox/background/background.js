@@ -21,6 +21,11 @@ function checkStoredSettings(storedSettings) {
     if (!storedSettings.digi_settings) {
         browser.storage.local.set({digi_settings});
     }
+    for (const item in storedSettings.digi_settings) {
+        if (!item in digi_settings) {
+            browser.storage.local.set({digi_settings});
+        }
+    }
 }
 const gettingStoredSettings = browser.storage.local.get();
 gettingStoredSettings.then(checkStoredSettings, onError);
