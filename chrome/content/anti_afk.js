@@ -2,9 +2,9 @@ console.log("digi-utils> anti_afk.js loaded");
 
 function loadAntiAfk() {
     if (!document.location.href.endsWith("login")) {
-        setInterval(function () {
-            window.wrappedJSObject.AutoLogout.trackAction();
-        }, 60_000)
+        let script = document.createElement("script");
+        script.innerHTML = "setInterval(function () {AutoLogout.trackAction();}, 60_000);";
+        document.body.appendChild(script);
     }
 }
 
