@@ -11,7 +11,14 @@ function createConfigs(digi_settings, element, saveSettings) {
         });
         if (digi_settings[setting].inputs) {
             for (var inputInfo of Object.keys(digi_settings[setting].inputs)) {
-                box.addItem(digi_settings[setting].inputs[inputInfo]);
+                box.addItem({
+                    "title": digi_settings[setting].inputs[inputInfo].title,
+                    "input": {
+                        "type": digi_settings[setting].inputs[inputInfo].input.type,
+                        id: inputInfo,
+                        value: digi_settings[setting].inputs[inputInfo].input.value
+                    }
+                });
             }
         }
         element.appendChild(box.getBox());

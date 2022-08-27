@@ -35,7 +35,6 @@ var digi_settings = {
                 title: "Benutzername",
                 input: {
                     type: "text",
-                    id: "username",
                     value: ""
                 }
             },
@@ -43,7 +42,6 @@ var digi_settings = {
                 title: "Passwort",
                 input: {
                     type: "password",
-                    id: "password",
                     value: ""
                 }
             }
@@ -69,7 +67,6 @@ var digi_settings = {
                 title: "Link zu deinem Register",
                 input: {
                     type: "text",
-                    id: "href_url",
                     value: "https://rgtfo-me.digitalesregister.it/v2/login"
                 }
             }
