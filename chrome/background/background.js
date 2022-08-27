@@ -91,7 +91,7 @@ function checkStoredSettings(storedSettings) {
             chrome.storage.local.set({digi_settings});
         }
     } else {
-        browser.storage.local.set({digi_settings}).then(function(){}, function (error) {console.error(error);});
+        chrome.storage.local.set({digi_settings});
     }
 }   
 
