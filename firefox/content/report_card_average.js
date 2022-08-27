@@ -1,19 +1,5 @@
 console.log("digi-utils> report_card_average.js loaded")
 
-function waitfor(test, expectedValue, msec, callback) {
-    if (test() !== expectedValue) {
-        setTimeout(function() {
-            waitfor(test, expectedValue, msec, callback);
-        }, msec);
-        return;
-    }
-    callback();
-}
-
-function handleRejection(message) {
-    console.log(message);
-}
-
 var grade_conv = {
     0.25: "0+",
     0.5: "0/1",
@@ -47,31 +33,31 @@ var grade_conv = {
     9.75: "10-"
 };
 
-function add_row_to_table(name, grade) {
-    var floored_grade = Math.floor(grade * 100) / 100;
+function addRowToTable(name, grade) {
+    var flooredGrade = Math.floor(grade * 100) / 100;
 
     var tbody = document.getElementsByTagName("tbody")[0];
 
     var tr = document.createElement("tr");
 
-    var name_element = document.createElement("td");
-    name_element.className = "padding-cell";
-    name_element.style = "vertical-align: top;";
-    name_element.textContent = name;
+    var nameElement = document.createElement("td");
+    nameElement.className = "padding-cell";
+    nameElement.style = "vertical-align: top;";
+    nameElement.textContent = name;
 
-    var grade_container = document.createElement("td");
-    grade_container.className = "padding-cell";
-    grade_container.style = "vertical-align: top;";
+    var gradeContainer = document.createElement("td");
+    gradeContainer.className = "padding-cell";
+    gradeContainer.style = "vertical-align: top;";
 
-    var grade_element = document.createElement("span");
-    grade_element.className = (floored_grade > 6) ? "green" : "red";
-    grade_element.textContent = ((floored_grade in grade_conv) ? grade_conv[floored_grade] : floored_grade);
+    var gradeElement = document.createElement("span");
+    gradeElement.className = (flooredGrade > 6) ? "green" : "red";
+    gradeElement.textContent = ((flooredGrade in grade_conv) ? grade_conv[flooredGrade] : flooredGrade);
 
     var useless_element = document.createElement("td"); //to make the table wide enough
 
-    grade_container.appendChild(grade_element);
-    tr.appendChild(name_element);
-    tr.appendChild(grade_container);
+    gradeContainer.appendChild(gradeElement);
+    tr.appendChild(nameElement);
+    tr.appendChild(gradeContainer);
     tr.appendChild(useless_element);
     tbody.appendChild(tr);
 }
@@ -79,57 +65,44 @@ function add_row_to_table(name, grade) {
 function get_average(map) {
     var average = 0;
 
-    for (const grades_and_weight of map.values()) {
-        var weight = grades_and_weight.weight;
-        var grade = grades_and_weight.grade;
+    for (const gradeWeightMap of map.values()) {
+        var weight = gradeWeightMap.weight;
+        var grade = gradeWeightMap.grade;
         average += grade * weight;
     }
 
     return average / map.size / 100;
 }
 
-function get_average_grade() {
+function getAverageGrade() {
     var grades = new Map();
-    var names_and_grades = document.getElementsByTagName("td");
+    var namesAndGrades = document.getElementsByTagName("td");
 
-    for (var i=0; i<names_and_grades.length; i+=3) {
-        grades.set(names_and_grades[i].textContent, {grade: parseInt(names_and_grades[i+1].textContent), weight: 100});
+    for (var i=0; i<namesAndGrades.length; i+=3) {
+        grades.set(namesAndGrades[i].textContent, {grade: parseInt(namesAndGrades[i+1].textContent), weight: 100});
     }
 
     var average = get_average(grades);
 
-    var grades_without_religion = grades;
+    var gradesWithoutReligion = grades;
 
-    grades_without_religion.delete("REL");
+    gradesWithoutReligion.delete("REL");
 
-    var average_without_religion = get_average(grades_without_religion);
+    var averageWithoutReligion = get_average(gradesWithoutReligion);
 
-    add_row_to_table("Durchschnitt", average);
-    add_row_to_table("Durchschnitt ohne Religion", average_without_religion);
+    addRowToTable("Durchschnitt", average);
+    addRowToTable("Durchschnitt ohne Religion", averageWithoutReligion);
 }
 
-function grades_are_loaded() {
+function gradesAreLoaded() {
         if (document.getElementsByTagName("td").length > 0) return true;
     return false;
 }
 
 function loadReportAverage() {
     if (document.location.href.endsWith("#student/certificate")) {
-        waitfor(grades_are_loaded, true, 50, get_average_grade);
+        waitfor(gradesAreLoaded, true, 50, getAverageGrade);
     }
 }
 
-// send a message requesting the report setting, resolve the promise once response is received
-const loadReportSetting = new Promise((resolve, reject) => {
-    function handleResponse(message) {
-        if (message.response === true) resolve();
-        else reject('report average is not activated');
-    }
-    function handleError(error) {
-        reject(error);
-    }
-    let sending = browser.runtime.sendMessage({setting: "report"});
-    sending.then(handleResponse, handleError);
-});
-
-loadReportSetting.then(loadReportAverage, handleRejection);
+getSettingState("report", loadReportAverage);

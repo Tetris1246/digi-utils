@@ -14,18 +14,4 @@ function loadDarkTheme() {
     head.appendChild(link);
 }
 
-// send a message requesting the dark setting, resolve the promise once response is received
-const loadDarkSetting = new Promise((resolve, reject) => {
-    function handleResponse(message) {
-        if (message.response === true) resolve();
-        else reject('color theme is not dark');
-    }
-    function handleError(error) {
-        reject(error);
-    }
-    let sending = browser.runtime.sendMessage({setting: "dark"});
-    sending.then(handleResponse, handleError);
-});
-
-// if loadDarkSetting resolves the promise, load the dark theme
-loadDarkSetting.then(loadDarkTheme, handleRejection);
+getSettingState("dark", loadDarkTheme);

@@ -8,9 +8,4 @@ function loadAntiAfk() {
     }
 }
 
-// send a message requesting the antiafk setting, resolve the promise once response is recieved
-function handleResponse(message) {
-    if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
-    if (message.response === true) loadAntiAfk();
-}
-chrome.runtime.sendMessage({setting: "antiafk"}, handleResponse);
+getSettingState("antiafk", loadAntiAfk);

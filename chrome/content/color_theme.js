@@ -10,9 +10,4 @@ function loadDarkTheme() {
     head.appendChild(link);
 }
 
-// send a message requesting the dark setting, load dark settings if response is true
-function handleResponse(message) {
-    if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
-    if (message.response === true) loadDarkTheme();
-}
-chrome.runtime.sendMessage({setting: "dark"}, handleResponse);
+getSettingState("dark", loadDarkTheme);
