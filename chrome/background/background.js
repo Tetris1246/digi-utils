@@ -4,42 +4,42 @@ console.log("digi-utils> background.js loaded")
 var digi_settings = {
     dark: {
         value: true,
-        description: "Schützt gegen Erblindung",
+        description: "Protects against blindness",
         title: "Dark Mode",
         inputs: []
     },
     average: {
         value: true,
-        description: "Zeigt den Notendurchschnitt im Bewertungsreiter an",
-        title: "Notendurchschnitt",
+        description: "Displays the grade average in the evaluation tab",
+        title: "Grade average",
         inputs: []
     },
     antiafk: {
         value: true,
-        description: "Hindert dich automatisch ausgeloggt zu werden",
+        description: "Prevents you from being logged out automatically",
         title: "Anti-AFK",
         inputs: []
     },
     report: {
         value: true,
-        description: "Zeigt den Notendurchschnitt im Zeugnisreiter an (nur im 2. Semester)",
-        title: "Zeugnisdurchschnitt",
+        description: "Displays the grade point average in the report card tab (only in the 2nd semester)",
+        title: "Report card average",
         inputs: []
     },
     login: {
         value: false,
-        description: "Loggt dich automatisch ein",
+        description: "Logs you in automatically (warning: the login data is stored unencrypted in the browser memory)",
         title: "Autologin",
         inputs: {
             username: {
-                title: "Benutzername",
+                title: "Username",
                 input: {
                     type: "text",
                     value: ""
                 }
             },
             password: {
-                title: "Passwort",
+                title: "Password",
                 input: {
                     type: "password",
                     value: ""
@@ -49,22 +49,22 @@ var digi_settings = {
     },
     icons: {
         value: true,
-        description: "Fügt Icons hinzu",
+        description: "Adds custom icons",
         title: "Custom Icons",
         inputs: []
     },
     limitis_fix: {
         value: false,
         title: "Limitis Fix",
-        description: "Ersetzt das Limitis Icon im Login Fenster mit einem Höchaufgelösten Icon mit unsichtbaren Hintergrund. (Nur RG-TFO)",
+        description: "Replaces the Limitis icon in the login window with a high-resolution icon with an invisible background",
     },
     custom_href: {
         value: true,
         title: "Custom Href",
-        description: "Fügt im Popup einen Button hinzu, um ins Register zu gelangen. Den Link kann man beliebig ändern. Vorgesehen ist der Link zu dem Register deiner Schule, doch andere Links Funktionieren auch. (Nach Eingabe muss der Browser neugestartet werden)",
+        description: "Adds a button in the popup to get to the register. You can change the link as you like. The default link leads to the register of RG-TFO, but other links work as well. (After entering, the browser must be restarted).",
         inputs: {
             href_url: {
-                title: "Link zu deinem Register",
+                title: "Link to your register",
                 input: {
                     type: "text",
                     value: "https://rgtfo-me.digitalesregister.it/v2/login"
@@ -82,7 +82,7 @@ function compareKeys(a, b) {
 }
 
 function checkStoredSettings(storedSettings) {
-    if (storedSettings) {
+    if (Object.keys(storedSettings).length > 0) {
         if (!compareKeys(storedSettings.digi_settings, digi_settings)) {
             chrome.storage.local.clear();
             chrome.storage.local.set({digi_settings});
