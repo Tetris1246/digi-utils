@@ -1,6 +1,5 @@
-
 function createConfigs(digi_settings, element, saveSettings) {
-    for (var setting of Object.keys(digi_settings)) {
+    for (var setting in digi_settings) {
         var box = new Box({
             title: digi_settings[setting].title,
             description: digi_settings[setting].description,
@@ -10,7 +9,7 @@ function createConfigs(digi_settings, element, saveSettings) {
             onchange: saveSettings
         });
         if (digi_settings[setting].inputs) {
-            for (var inputInfo of Object.keys(digi_settings[setting].inputs)) {
+            for (var inputInfo in digi_settings[setting].inputs) {
                 box.addItem({
                     "title": digi_settings[setting].inputs[inputInfo].title,
                     "input": {
@@ -24,7 +23,6 @@ function createConfigs(digi_settings, element, saveSettings) {
         element.appendChild(box.getBox());
     }
 }
-
 
 chrome.storage.local.get(function (item) {
     createConfigs(item.digi_settings, document.body, function saveSettings() {

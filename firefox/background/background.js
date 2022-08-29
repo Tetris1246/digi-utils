@@ -6,25 +6,25 @@ var digi_settings = {
         value: true,
         description: "Protects against blindness",
         title: "Dark Mode",
-        inputs: []
+        inputs: {}
     },
     average: {
         value: true,
         description: "Displays the grade average in the evaluation tab",
         title: "Grade average",
-        inputs: []
+        inputs: {}
     },
     antiafk: {
         value: true,
         description: "Prevents you from being logged out automatically",
         title: "Anti-AFK",
-        inputs: []
+        inputs: {}
     },
     report: {
         value: true,
         description: "Displays the grade point average in the report card tab (only in the 2nd semester)",
         title: "Report card average",
-        inputs: []
+        inputs: {}
     },
     login: {
         value: false,
@@ -51,12 +51,13 @@ var digi_settings = {
         value: true,
         description: "Adds custom icons",
         title: "Custom Icons",
-        inputs: []
+        inputs: {}
     },
     limitis_fix: {
         value: false,
         title: "Limitis Fix",
         description: "Replaces the Limitis icon in the login window with a high-resolution icon with an invisible background",
+        inputs: {}
     },
     custom_href: {
         value: true,
@@ -74,24 +75,72 @@ var digi_settings = {
     }
 }
 
-//https://stackoverflow.com/questions/14368596/how-can-i-check-that-two-objects-have-the-same-set-of-property-names
-function compareKeys(a, b) {
-    var aKeys = Object.keys(a).sort();
-    var bKeys = Object.keys(b).sort();
-    return JSON.stringify(aKeys) === JSON.stringify(bKeys);
+function compareArray(arr1, arr2) {
+    if (arr1 && arr2) {
+        if (arr1.length === arr2.length) {
+            for (let i=0; i<arr1.length; i++) {
+                if (arr1[i] !== arr2[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkIfValueExists(setting) {
+    return setting.hasOwnProperty("value");
+}
+
+function checkSettingArg(storage_setting, default_setting, name) {
+    if (!storage_setting.hasOwnProperty(name)) return false;
+    if (!default_setting.hasOwnProperty(name)) return false;
+
+    return storage_setting[name] === default_setting[name];
+}
+
+function compareSettings(default_settings, storage_settings) {
+    if (!compareArray(Object.keys(default_settings).sort(), Object.keys(storage_settings).sort())) return false;
+    
+    for (let setting in default_settings) {
+        if (!checkSettingArg(storage_settings[setting], default_settings[setting], "description")) return false;
+        if (!checkSettingArg(storage_settings[setting], default_settings[setting], "title")) return false;
+        if (!checkIfValueExists(storage_settings[setting])) return false;
+        
+        if (!storage_settings[setting].hasOwnProperty("inputs")) return false;
+        if (!default_settings[setting].hasOwnProperty("inputs")) return false;
+        
+        if (!compareArray(Object.keys(default_settings[setting].inputs).sort(), Object.keys(storage_settings[setting].inputs).sort())) return false;
+
+        if (Object.keys(storage_settings[setting].inputs).length > 0) {
+            for (input in storage_settings[setting].inputs) {
+                if (!checkSettingArg(storage_settings[setting].inputs[input], default_settings[setting].inputs[input], "title")) return false;
+
+                if (!storage_settings[setting].inputs[input].hasOwnProperty("input")) return false;
+                if (!default_settings[setting].inputs[input].hasOwnProperty("input")) return false;
+
+                if (!compareArray(Object.keys(default_settings[setting].inputs[input].input), Object.keys(storage_settings[setting].inputs[input].input))) return false;
+                if (!checkSettingArg(storage_settings[setting].inputs[input].input, default_settings[setting].inputs[input].input, "type")) return false;
+                if (!checkIfValueExists(storage_settings[setting].inputs[input].input)) return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 function checkStoredSettings(storedSettings) {
+    console.log(storedSettings)
     if (Object.keys(storedSettings).length > 0) {
-        if (!compareKeys(storedSettings.digi_settings, digi_settings)) {
-            browser.storage.local.clear();
-            browser.storage.local.set({digi_settings}).then(function(){}, function (error) {console.error(error);});
+        if (!compareSettings(digi_settings, storedSettings.digi_settings)) {
+            chrome.storage.local.clear();
+            chrome.storage.local.set({digi_settings});
         }
     } else {
-        browser.storage.local.set({digi_settings}).then(function(){}, function (error) {console.error(error);});
+        chrome.storage.local.set({digi_settings});
     }
-}
-browser.storage.local.get().then(checkStoredSettings, function (error) {console.error(error);});
+}   
 
 //https://stackoverflow.com/questions/48982568/javascript-change-data-in-json-by-string-data-path
 function setItemByPath(data, path, value) {
@@ -118,10 +167,7 @@ function handleMessage(request, sender, sendResponse) {
             var setting = request.setting;
             sendResponse({response: item.digi_settings[setting]});
         }, function (error) {console.error(error);});
-    }
-    
-    
-    else if ("getSetting" in request) {
+    } else if ("getSetting" in request) {
         browser.storage.local.get().then(function(item) {
             sendResponse({response: item.digi_settings[request.getSetting.setting]["value"]});
         }, function (error) {console.error(error);});
@@ -182,4 +228,7 @@ function handleMessage(request, sender, sendResponse) {
     }
     return true; // to send an asynchronous response
 }
+
+browser.storage.local.get().then(checkStoredSettings, function (error) {console.error(error);});
+
 browser.runtime.onMessage.addListener(handleMessage);
