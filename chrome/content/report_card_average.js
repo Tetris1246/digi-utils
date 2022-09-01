@@ -100,6 +100,11 @@ function gradesAreLoaded() {
 }
 
 function loadReportAverage() {
+    if (!document.location.href.split("?")[0].endsWith("login")) {
+        document.getElementsByClassName("v2-main-navigation main-navigation-show-mobile")[0].childNodes[10].onclick = function () {
+            waitfor(gradesAreLoaded, true, 50, getAverageGrade);
+        };
+    }
     if (document.location.href.endsWith("#student/certificate")) {
         waitfor(gradesAreLoaded, true, 50, getAverageGrade);
     }

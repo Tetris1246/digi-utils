@@ -10,7 +10,7 @@ var digi_settings = {
     },
     average: {
         value: true,
-        description: "Displays the grad e average in the evaluation tab",
+        description: "Displays the grade average in the evaluation tab",
         title: "Grade average",
         inputs: {}
     },
