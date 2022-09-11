@@ -11,24 +11,26 @@ function setWarning() {
 
 function login() {
     if (document.location.href.split("?")[0].endsWith("login")) {
-        browser.runtime.sendMessage({"getSettingsByPath": {paths: [["digi_settings", "login", "inputs", "username", "input", "value"], ["digi_settings", "login", "inputs", "password", "input", "value"]]}}).then(function(response) {
-            if (response[0] !== "" && response[1] !== "") {
+        getSettingInputValue("login", "password", function (passwordResponse) {
+            getSettingInputValue("login", "username", function (usernameResponse) {
+                if (passwordResponse.response !== "" || usernameResponse.response !== "") {
         
-                var button = document.getElementsByClassName("btn btn-lg")[0];
-        
-                var usernameElement = document.getElementById("inputUserName");
-                var passwordElement = document.getElementById("inputPassword");
-        
-                usernameElement.value = response.response[0];
-                passwordElement.value = response.response[1];
-                usernameElement.dispatchEvent(new Event("input", { bubbles: true }));
-                passwordElement.dispatchEvent(new Event("input", { bubbles: true }));
-        
-                button.click();
-            } else {
-                setWarning();
-            }
-        }, function(e){console.error(e)});
+                    var button = document.getElementsByClassName("btn btn-lg")[0];
+            
+                    var usernameElement = document.getElementById("inputUserName");
+                    var passwordElement = document.getElementById("inputPassword");
+            
+                    usernameElement.value = usernameResponse.response;
+                    passwordElement.value = passwordResponse.response;
+                    usernameElement.dispatchEvent(new Event("input", { bubbles: true }));
+                    passwordElement.dispatchEvent(new Event("input", { bubbles: true }));
+            
+                    button.click();
+                } else {
+                    setWarning();
+                }
+            });
+        });
     }
 }
 

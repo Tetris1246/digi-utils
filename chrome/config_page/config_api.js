@@ -62,6 +62,9 @@ function Box(object) {
         checkbox.type = "checkbox";
         checkbox.id = `${this.id}-checkbox`;
         checkbox.checked = this.state;
+        checkbox.addEventListener('build', function() {
+            setState(box, checkbox);
+        }, false);
         checkbox.addEventListener("change", function() {
             setState(box, checkbox);
         });

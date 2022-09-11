@@ -1,7 +1,7 @@
 console.log("digi-utils> background.js loaded")
 
 // check if settings are already stored, if not set defaults
-var digi_settings = {
+var default_settings = {
     dark: {
         value: true,
         description: "Protects against blindness",
@@ -54,7 +54,7 @@ var digi_settings = {
         inputs: {}
     },
     limitis_fix: {
-        value: false,
+        value: true,
         title: "Limitis Fix",
         description: "Replaces the Limitis icon in the login window with a high-resolution icon with an invisible background",
         inputs: {}
@@ -75,69 +75,45 @@ var digi_settings = {
     }
 }
 
-function compareArray(arr1, arr2) {
-    if (arr1 && arr2) {
-        if (arr1.length === arr2.length) {
-            for (let i=0; i<arr1.length; i++) {
-                if (arr1[i] !== arr2[i]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-    return false;
-}
-
-function checkIfValueExists(setting) {
-    return setting.hasOwnProperty("value");
-}
-
-function checkSettingArg(storage_setting, default_setting, name) {
-    if (!storage_setting.hasOwnProperty(name)) return false;
-    if (!default_setting.hasOwnProperty(name)) return false;
-
-    return storage_setting[name] === default_setting[name];
-}
-
-function compareSettings(default_settings, storage_settings) {
-    if (!compareArray(Object.keys(default_settings).sort(), Object.keys(storage_settings).sort())) return false;
-    
+function compareSettings(default_settings, storage_values) {
     for (let setting in default_settings) {
-        if (!checkSettingArg(storage_settings[setting], default_settings[setting], "description")) return false;
-        if (!checkSettingArg(storage_settings[setting], default_settings[setting], "title")) return false;
-        if (!checkIfValueExists(storage_settings[setting])) return false;
+        if (storage_values.hasOwnProperty(setting)) {
+            if (!storage_values[setting].hasOwnProperty("value")) {
+                storage_values[setting].value = default_settings[setting].value;
+            }
+        } else {
+            storage_values[setting] = {};
+            storage_values[setting].value = default_settings[setting].value;
+        }
         
-        if (!storage_settings[setting].hasOwnProperty("inputs")) return false;
-        if (!default_settings[setting].hasOwnProperty("inputs")) return false;
-        
-        if (!compareArray(Object.keys(default_settings[setting].inputs).sort(), Object.keys(storage_settings[setting].inputs).sort())) return false;
+        if (!storage_values[setting].hasOwnProperty("inputs")) {
+            storage_values[setting].inputs = {};
+        }
 
-        if (Object.keys(storage_settings[setting].inputs).length > 0) {
-            for (input in storage_settings[setting].inputs) {
-                if (!checkSettingArg(storage_settings[setting].inputs[input], default_settings[setting].inputs[input], "title")) return false;
-
-                if (!storage_settings[setting].inputs[input].hasOwnProperty("input")) return false;
-                if (!default_settings[setting].inputs[input].hasOwnProperty("input")) return false;
-
-                if (!compareArray(Object.keys(default_settings[setting].inputs[input].input), Object.keys(storage_settings[setting].inputs[input].input))) return false;
-                if (!checkSettingArg(storage_settings[setting].inputs[input].input, default_settings[setting].inputs[input].input, "type")) return false;
-                if (!checkIfValueExists(storage_settings[setting].inputs[input].input)) return false;
+        for (let inputItem in default_settings[setting].inputs) {
+            if (storage_values[setting]["inputs"].hasOwnProperty(inputItem)) {
+                if (!storage_values[setting]["inputs"][inputItem].hasOwnProperty("value")) {
+                    storage_values[setting]["inputs"][inputItem].value = default_settings[setting]["inputs"][inputItem]["input"].value;
+                }
+            } else {
+                storage_values[setting]["inputs"][inputItem] = {};
+                storage_values[setting]["inputs"][inputItem].value = default_settings[setting]["inputs"][inputItem]["input"].value;
             }
         }
+        
     }
-
-    return true;
+    return storage_values;
 }
 
 function checkStoredSettings(storedSettings) {
-    if (Object.keys(storedSettings).length > 0) {
-        if (!compareSettings(digi_settings, storedSettings.digi_settings)) {
+    if (storedSettings.hasOwnProperty("digi_settings")) {
+        var newSettings = compareSettings(default_settings, storedSettings.digi_settings);
+        if (storedSettings !== newSettings) {
             chrome.storage.local.clear();
-            chrome.storage.local.set({digi_settings});
+            chrome.storage.local.set({digi_settings: newSettings});
         }
     } else {
-        chrome.storage.local.set({digi_settings});
+        chrome.storage.local.set({digi_settings: compareSettings(default_settings, {})});
     }
 }   
 
@@ -153,70 +129,69 @@ function setItemByPath(data, path, value) {
     return data;
 }
 
-function getItemByPath(data, path) {
-    var k = data;
-    path.forEach(e => (k = k[e]));
-    return k;
-}
-
 // listen for and handle messages
-function handleMessage(request, sender, sendResponse) {
-    if ("getSetting" in request) {
+function handleMessage(request, sender, sendResponse) { //mostly unused code but idc
+    console.log(request)
+    if ("getSettingState" in request) {
         chrome.storage.local.get(function(item) {
-            sendResponse({response: item.digi_settings[request.getSetting.setting]["value"]});
+            sendResponse({response: item.digi_settings[request.getSettingState.setting]["value"]});
         });
-    } else if ("getSettingByPath" in request) {
+    } else if ("getSettingInputValue" in request) {
         chrome.storage.local.get(function(item) {
-            var newData = getItemByPath(item, request.getSettingByPath.path);
-            sendResponse({response: newData});
+            sendResponse({response: item.digi_settings[request.getSettingInputValue.setting].inputs[request.getSettingInputValue.input]["value"]});
         });
-    } else if ("setSetting" in request) {
+    } else if ("getSettingStates" in request) {
         chrome.storage.local.get(function(item) {
-            let newData = {};
-            newData = setItemByPath(item, ["digi_settings", request.setSetting.setting, "value"], request.setSetting.value);
-            chrome.storage.local.set(newData);
-            sendResponse({response: newData});
+            let states = [];
+            for (let setting of request.getSettingStates.settings) 
+                states.push(item.digi_settings[setting]["value"])
+            sendResponse({response: states});
         });
-    } else if ("setSettingByPath" in request) {
+    } else if ("getSettingInputValues" in request) {
         chrome.storage.local.get(function(item) {
-            setItemByPath(item, request.setSettingByPath.path, request.setSettingByPath.value);
-            chrome.storage.local.set(item);
-            sendResponse({response: item});
+            let values = [];
+            for (let i = 0; i<request.getSettingInputValues.settings.length; i++)
+                values.push(item.digi_settings[request.getSettingInputValues.settings[i]].inputs[request.getSettingInputValues.inputs[i]]["value"])
+            sendResponse({response: values});
         });
-    } else if ("setSettings" in request) {
+    } else if ("setSettingState" in request) {
         chrome.storage.local.get(function(item) {
-            let newData = item;
-            for (var i = 0; i < request.setSettings.settings.length; i++) { 
-                newData = setItemByPath(newData, ["digi_settings", request.setSettings.settings[i], "value"], request.setSettings.values[i]);
+            let data = setItemByPath(item, ["digi-utils", request.setSettingState.setting, "value"], request.setSettingState.value);
+            chrome.local.storage.set(data);
+            sendResponse({response: data});
+        });
+    } else if ("setSettingInputValue" in request) {
+        chrome.storage.local.get(function(item) {
+            let data = setItemByPath(item, ["digi-utils"], request.setSettingInputValue.setting, "inputs", request.setSettingInputValue.input, request.setSettingInputValue.value);
+            chrome.local.storage.set(data);
+            sendResponse({response: data}); 
+        });
+    } else if ("setSettingStates" in request) {
+        chrome.storage.local.get(function(item) {
+            let data = item;
+            for (let i=0; i<request.setSettingStates.settings.length; i++) {
+                data = setItemByPath(data, ["digi-utils", request.setSettingStates.settings[i], "value"], request.setSettingStates.values[i]);
             }
-            chrome.storage.local.set(newData);
-            sendResponse({response: newData});
+            chrome.local.storage.set(data);
+            sendResponse({response: data});
         });
-    } else if ("setSettingsByPath" in request) {
+    } else if ("setSettingInputValues" in request) {
         chrome.storage.local.get(function(item) {
-            let newData = item;
-            for (var i = 0; i < request.setSettingsByPath.paths.length; i++) { 
-                newData = setItemByPath(newData, request.setSettingsByPath.paths[i], request.setSettingsByPath.values[i]);
-            }
-            chrome.storage.local.set(newData);
-            sendResponse({response: newData});
+            let values = [];
+            for (let i = 0; i<request.getSettingInputValues.settings.length; i++)
+                values.push(item.digi_settings[request.getSettingInputValues.settings[i]].inputs[request.getSettingInputValues.inputs[i]]["value"])
+            sendResponse({response: values});
         });
-    } else if ("getSettings" in request) {
         chrome.storage.local.get(function(item) {
-            var newData = [];
-            for (setting of request.getSettings.settings) {
-                newData.push(item.digi_settings[setting]["value"]);
+            let data = item;
+            for (let i=0; i<request.setSettingInputValues.settings.length; i++) {
+                data = setItemByPath(data, ["digi-utils", request.setSettingInputValues.settings[i], "inputs", request.setSettingInputValues.inputs[i], "value"], request.setSettingInputValues.values[i]);
             }
-            sendResponse({response: newData});
+            chrome.local.storage.set(data);
+            sendResponse({response: data});
         });
-    } else if ("getSettingsByPath" in request) {
-        chrome.storage.local.get(function(item) {
-            var newData = [];
-            for (var i = 0; i < request.getSettingsByPath.paths.length; i++) {
-                newData.push(getItemByPath(item, request.getSettingsByPath.paths[i]));
-            }
-            sendResponse({response: newData});
-        });
+    } else if ("getDefaultObject" in request) {
+        sendResponse({response: default_settings})
     } else {
         sendResponse({response: "something else bruh"});
     }

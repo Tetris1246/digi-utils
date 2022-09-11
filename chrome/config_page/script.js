@@ -1,21 +1,70 @@
-function createConfigs(digi_settings, element, saveSettings) {
-    for (var setting in digi_settings) {
+function saveSettings() {
+    var data = {digi_settings: {}};
+    for (let element of document.getElementsByClassName("box-checkbox")) {
+        var name = element.id.split("-")[0];
+        var value = element.checked;
+        data.digi_settings[name] = {};
+        data.digi_settings[name].value = value;
+        data.digi_settings[name].inputs = {};
+    }
+
+    for (let inputElement of document.getElementsByClassName("box-item-input")) {
+        var fieldName = inputElement.id;
+        var fieldValue;
+        if (inputElement.type === "checkbox") {
+            fieldValue = inputElement.checked;
+        } else {
+            fieldValue = inputElement.value;
+        }
+
+        data.digi_settings[inputElement.name].inputs[fieldName] = {};
+        data.digi_settings[inputElement.name].inputs[fieldName].value = fieldValue;
+    }
+
+    setStorage(data);
+    settingsChanged();
+}
+
+function reloadSettings() {
+    getStorage(function (settings) {
+        
+        for (let element of document.getElementsByClassName("box-checkbox")) {
+            var name = element.id.split("-")[0];
+            element.checked = settings.digi_settings[name].value;
+            const event = new Event('build');
+            element.dispatchEvent(event);
+        }
+
+        for (let inputElement of document.getElementsByClassName("box-item-input")) {
+            var fieldName = inputElement.id;
+            if (inputElement.type === "checkbox") {
+                inputElement.checked = settings.digi_settings[inputElement.name].inputs[fieldName].value;
+            } else {
+                inputElement.value = settings.digi_settings[inputElement.name].inputs[fieldName].value;
+            }
+        }
+    });
+}
+
+function createConfigPage(default_settings) {
+    let element = document.body;
+    for (var setting in default_settings) {
         var box = new Box({
-            title: digi_settings[setting].title,
-            description: digi_settings[setting].description,
+            title: default_settings[setting].title,
+            description: default_settings[setting].description,
             id: setting,
             hover: "",
-            enabled: digi_settings[setting].value,
+            enabled: false,
             onchange: saveSettings
         });
-        if (digi_settings[setting].inputs) {
-            for (var inputInfo in digi_settings[setting].inputs) {
+        if (default_settings[setting].inputs) {
+            for (var inputInfo in default_settings[setting].inputs) {
                 box.addItem({
-                    "title": digi_settings[setting].inputs[inputInfo].title,
+                    "title": default_settings[setting].inputs[inputInfo].title,
                     "input": {
-                        "type": digi_settings[setting].inputs[inputInfo].input.type,
+                        "type": default_settings[setting].inputs[inputInfo].input.type,
                         id: inputInfo,
-                        value: digi_settings[setting].inputs[inputInfo].input.value
+                        value: true
                     }
                 });
             }
@@ -24,27 +73,10 @@ function createConfigs(digi_settings, element, saveSettings) {
     }
 }
 
-chrome.storage.local.get(function (item) {
-    createConfigs(item.digi_settings, document.body, function saveSettings() {
-        var paths = [];
-        var values = [];
-        for (let element of document.getElementsByClassName("box-checkbox")) {
-            var name = element.id.split("-")[0];
-            var value = element.checked;
-            paths.push(["digi_settings", name, "value"]);
-            values.push(value);
-        }
-        for (let inputElement of document.getElementsByClassName("box-item-input")) {
-            var fieldName = inputElement.id;
-            var fieldValue;
-            if (inputElement.type === "checkbox") {
-                fieldValue = inputElement.checked;
-            } else {
-                fieldValue = inputElement.value;
-            }
-            paths.push(["digi_settings", inputElement.name, "inputs", fieldName, "input", "value"]);
-            values.push(fieldValue);
-        }
-        chrome.runtime.sendMessage({"setSettingsByPath": {"paths": paths, "values": values}}, function(response) {});
-    });
+//create the Html
+getDefaultSettings(function(object) {
+    createConfigPage(object);
+    reloadSettings();
 });
+
+addSettingChangeListener(reloadSettings);

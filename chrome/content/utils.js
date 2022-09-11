@@ -1,5 +1,5 @@
 function getSettingState(setting, callFunction) {
-    chrome.runtime.sendMessage({"getSetting": {"setting": setting}}, function (message) {
+    chrome.runtime.sendMessage({"getSettingState": {"setting": setting}}, function (message) {
         if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
         if (message.response === true) callFunction();
     });
@@ -19,4 +19,11 @@ function waitfor(test, expectedValue, msec, callback) {
         return;
     }
     callback();
+}
+
+function getSettingInputValue(setting, input, callFunction) {
+    chrome.runtime.sendMessage({"getSettingInputValue": {"setting": setting, "input": input}}, function (message) {
+        if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
+        callFunction(message);
+    });
 }
