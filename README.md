@@ -27,3 +27,4 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 ### To-Do:
 - language settings
 - multiple color themes
+  
