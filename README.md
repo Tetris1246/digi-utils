@@ -21,7 +21,7 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 -  [<img src="chromium%20guides/Opera%20GX/images/logo.png" height="15"> Opera GX](chromium%20guides/Opera%20GX/opera_gx_guide.md)
 -  [<img src="chromium%20guides/IE.png" height="15"> Internet Explorer](https://youtu.be/dQw4w9WgXcQ)
 
-### Features:
+## Features:
 - dark theme
 - grade average
 - toggle features on/off
@@ -30,6 +30,6 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 - report card average
 - auto login
 
-### To-Do:
+## To-Do:
 - language settings
 - multiple color themes
