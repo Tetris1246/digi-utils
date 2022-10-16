@@ -1,60 +1,83 @@
-console.log("digi-utils> popup.js loaded");
+function reloadSettings() {
+    getStorage(function (stored_values) {
+        for (let checkbox of document.getElementsByClassName("setting-checkbox")) {
+            checkbox.checked = stored_values.digi_settings[checkbox.name].value;
+        }
+    });
+}
 
-// ToDo: rewrite this using for-loops
-var checkbox_dark = document.getElementById("dark");
-var checkbox_average = document.getElementById("average");
-var checkbox_antiafk = document.getElementById("antiafk");
-var checkbox_report = document.getElementById("report");
-var checkbox_login = document.getElementById("login");
-var checkbox_icons = document.getElementById("icons");
-
-// save settings on checkbox change
 function saveSettings() {
-    browser.storage.local.set({digi_settings: {
-        dark: checkbox_dark.checked,
-        average: checkbox_average.checked,
-        antiafk: checkbox_antiafk.checked,
-        report: checkbox_report.checked,
-        login: checkbox_login.checked,
-        icons: checkbox_icons.checked
-    }});
+    let new_storage_settings = {digi_settings: {}};
+    for (let checkbox of document.getElementsByClassName("setting-checkbox")) {
+        new_storage_settings.digi_settings[checkbox.name] = {
+            value: checkbox.checked
+        }
+        compareSettings(new_storage_settings, function(new_storage_settings) {
+            setStorage(new_storage_settings);
+            settingsChanged();
+            reloadSettings();
+        });
+    }
 }
 
-checkbox_dark.onchange = function() {
-    saveSettings();
-};
-checkbox_average.onchange = function() {
-    saveSettings();
-};
-checkbox_antiafk.onchange = function() {
-    saveSettings();
-};
-checkbox_report.onchange = function() {
-    saveSettings();
-};
-checkbox_login.onchange = function() {
-    saveSettings();
-};
-checkbox_icons.onchange = function() {
-    saveSettings();
-};
-
-// check checkboxes according to settings
-function onGot(item) {
-    checkbox_dark.checked = item.digi_settings.dark;
-    checkbox_average.checked = item.digi_settings.average;
-    checkbox_report.checked = item.digi_settings.report;
-    checkbox_antiafk.checked = item.digi_settings.antiafk;
-    checkbox_login.checked = item.digi_settings.login;
-    checkbox_icons.checked = item.digi_settings.icons;
-
-}
-function onError(error) {
-    console.log(`Error: ${error}`);
-}
-function updateCheckboxes() {
-    let gettingItem = browser.storage.local.get();
-    gettingItem.then(onGot, onError);
+function compareSettings(new_storage_settings, callback) {
+    getStorage(function (stored_values) {
+        for (let setting in new_storage_settings.digi_settings) {
+            new_storage_settings.digi_settings[setting].inputs = stored_values.digi_settings[setting].inputs;
+        }
+        callback(new_storage_settings);
+    });
 }
 
-updateCheckboxes();
+function appendSetting(object, element) {
+    var checkbox = document.createElement("input");
+    var label = document.createElement("label");
+    var container = document.createElement("div");
+
+    container.className = "setting-container";
+    container.name = object.internalName;
+    container.title = object.description;
+
+    label.innerText = object.title
+    label.className = "setting-label";
+
+    checkbox.type = "checkbox";
+    checkbox.name = object.internalName;
+    checkbox.addEventListener("change", function() {
+        if (checkbox.checked) {
+            if (object.hasInputs) {
+                alert("If you want to use this option, you also have to set some data into the config page."); //pls rewrite. im bad at explaining stuff
+            }
+        }
+    });
+    checkbox.addEventListener("change", object.onchange);
+    checkbox.className = "setting-checkbox";
+
+    container.appendChild(checkbox);
+    container.appendChild(label);
+
+    element.appendChild(container);
+}
+
+function createConfigPage(stored_values, default_settings) {
+    for (let setting in default_settings) {
+        let settingInfo = {
+            "internalName": setting,
+            "onchange": saveSettings,
+            "title": default_settings[setting].title,
+            "description": default_settings[setting].description,
+            "hasInputs": (Object.keys(stored_values.digi_settings[setting].inputs).length !== 0)
+        }
+        appendSetting(settingInfo, document.getElementById("settings"));
+    }
+}
+
+
+getStorage(function (stored_values) {
+    getDefaultSettings(function (default_settings){
+        createConfigPage(stored_values, default_settings)
+        reloadSettings()
+    });
+});
+
+addSettingChangeListener(reloadSettings);

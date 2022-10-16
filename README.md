@@ -13,8 +13,13 @@ Feel free to report issues or request new features.
 Digi-Utils has both a Firefox and a Chrome version. All developement and minor changes will be done to the Firefox version, and only major updates get ported over to Chrome.
 
 ## Get the Extension:
-- Firefox: https://addons.mozilla.org/en-US/firefox/addon/digi-utils/
-- Chrome: [not yet submitted to Chrome Web Store]
+-  [<img src="chromium%20guides/firefox.png" height="15"> Firefox](https://addons.mozilla.org/en-US/firefox/addon/digi-utils/)
+-  [<img src="chromium%20guides/Google%20Chrome/images/logo.png" height="15"> Chrome](chromium%20guides/Google%20Chrome/chrome_guide.md)
+-  [<img src="chromium%20guides/Microsoft%20Edge/images/logo.png" height="15"> Edge](chromium%20guides/Microsoft%20Edge/edge_guide.md)
+-  [<img src="chromium%20guides/Brave/images/logo.png" height="15"> Brave](chromium%20guides/Brave/brave_guide.md)
+-  [<img src="chromium%20guides/Opera/images/logo.png" height="15"> Opera](chromium%20guides/Opera/opera_guide.md)
+-  [<img src="chromium%20guides/Opera%20GX/images/logo.png" height="15"> Opera GX](chromium%20guides/Opera%20GX/opera_gx_guide.md)
+-  [<img src="chromium%20guides/IE.png" height="15"> Internet Explorer](https://youtu.be/dQw4w9WgXcQ)
 
 ## Features:
 - dark theme
@@ -22,9 +27,9 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 - toggle features on/off
 - anti-afk
 - fancy icons
+- report card average
+- auto login
 
 ## To-Do:
 - language settings
-- report card average
 - multiple color themes
-- auto login

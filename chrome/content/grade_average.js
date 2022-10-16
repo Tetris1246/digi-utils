@@ -1,21 +1,6 @@
-console.log("digi-utils> grade_average.js loaded");
+console.log("digi-utils> gradeAverage.js loaded");
 
-// https://stackoverflow.com/questions/7193238/wait-until-a-condition-is-true
-// test: function that returns a value
-// expectedValue: the value of the test function we are waiting for
-// msec: delay between the calls to test
-// callback: function to execute when the condition is met
-function waitfor(test, expectedValue, msec, callback) {
-    if (test() !== expectedValue) {
-        setTimeout(function() {
-            waitfor(test, expectedValue, msec, callback);
-        }, msec);
-        return;
-    }
-    callback();
-}
-
-var grade_conv = {
+var gradeConv = {
     "0+": 0.25,
     "0/1": 0.5,
     "1-": 0.75,
@@ -48,84 +33,84 @@ var grade_conv = {
     "10-": 9.75,
 };
 
-function calculate_grades() {
+function calculateGrades() {
     // total average of ALL grades (including weight)
-    const total_grades = document.getElementsByTagName("grade-isolated");
+    const totalGrades = document.getElementsByTagName("grade-isolated");
     let total = 0;
     let total_counter = 0;
-    for(let i = 0; i < total_grades.length; i++) {
-        let weight = total_grades[i].firstElementChild.title.split("<br>")[2];
+    for(let i = 0; i < totalGrades.length; i++) {
+        let weight = totalGrades[i].firstElementChild.title.split("<br>")[2];
         weight = weight.slice(0, weight.length - 1);
         weight /= 100;
-        if (grade_conv[total_grades[i].textContent] === undefined) {
-            total += parseFloat(total_grades[i].textContent) * weight;
+        if (gradeConv[totalGrades[i].textContent] === undefined) {
+            total += parseFloat(totalGrades[i].textContent) * weight;
         }
         else {
-            total += grade_conv[total_grades[i].textContent] * weight;
+            total += gradeConv[totalGrades[i].textContent] * weight;
         }
         total_counter += weight;
     }
     let avg_total = total / total_counter;
 
     // semester (even indexes) AND year (odd indexes) averages
-    const average_grades = document.getElementsByTagName("grade-object-isolated")
-    let semester_total = 0;
-    let year_total = 0;
-    let semester_counter = 0;
-    let year_counter = 0;
-    for(let i = 0; i < average_grades.length; i++) {
-        if (average_grades[i].textContent === "") continue;
-        if (grade_conv[average_grades[i].textContent] === undefined) {
+    const averageGrades = document.getElementsByTagName("grade-object-isolated")
+    let semesterTotal = 0;
+    let yearTotal = 0;
+    let semesterCounter = 0;
+    let yearCounter = 0;
+    for(let i = 0; i < averageGrades.length; i++) {
+        if (averageGrades[i].textContent === "") continue;
+        if (gradeConv[averageGrades[i].textContent] === undefined) {
             if (i%2===0) {
-                semester_total += parseFloat(average_grades[i].textContent);
-                semester_counter++;
+                semesterTotal += parseFloat(averageGrades[i].textContent);
+                semesterCounter++;
             }
             else {
-                year_total += parseFloat(average_grades[i].textContent);
-                year_counter ++;
+                yearTotal += parseFloat(averageGrades[i].textContent);
+                yearCounter ++;
             }
         }
         else {
             if (i%2===0) {
-                semester_total += grade_conv[average_grades[i].textContent];
-                semester_counter++;
+                semesterTotal += gradeConv[averageGrades[i].textContent];
+                semesterCounter++;
             }
             else {
-                year_total += grade_conv[average_grades[i].textContent];
-                year_counter ++;
+                yearTotal += gradeConv[averageGrades[i].textContent];
+                yearCounter ++;
             }
         }
     }
-    let avg_semester = semester_total / semester_counter;
-    let avg_year = year_total / year_counter;
+    let avgSemester = semesterTotal / semesterCounter;
+    let avgYear = yearTotal / yearCounter;
 
     // display averages
     let stats = document.getElementsByClassName("student-statistics row")[0];
     stats.style.margin = "";
     stats.innerHTML = "";
-    let semester_span = document.createElement("span");
-    semester_span.innerHTML = "Semester: " + avg_semester.toFixed(2);
-    semester_span.style.marginRight = "30px";
-    let year_span = document.createElement("span");
-    year_span.innerHTML = "Jahr " + avg_year.toFixed(2);
-    year_span.style.marginRight = "30px";
-    year_span.style.fontSize = "15px";
-    let total_span = document.createElement("span");
-    total_span.innerHTML = "Gesamt " + avg_total.toFixed(2);
-    total_span.style.fontSize = "15px";
-    grade_average = document.createElement("h1");
-    grade_average.style.fontSize = "25px";
-    grade_average.className = "h1";
-    grade_average.style.margin = "0";
-    grade_average.style.marginTop = "15px";
-    grade_average.innerHTML = "Ø ";
-    grade_average.appendChild(semester_span);
-    grade_average.appendChild(year_span);
-    grade_average.appendChild(total_span);
-    stats.appendChild(grade_average);
+    let semesterSpan = document.createElement("span");
+    semesterSpan.innerHTML = "Semester: " + avgSemester.toFixed(2);
+    semesterSpan.style.marginRight = "30px";
+    let yearSpan = document.createElement("span");
+    yearSpan.innerHTML = "Jahr " + avgYear.toFixed(2);
+    yearSpan.style.marginRight = "30px";
+    yearSpan.style.fontSize = "15px";
+    let totalSpan = document.createElement("span");
+    totalSpan.innerHTML = "Gesamt " + avg_total.toFixed(2);
+    totalSpan.style.fontSize = "15px";
+    gradeAverage = document.createElement("h1");
+    gradeAverage.style.fontSize = "25px";
+    gradeAverage.className = "h1";
+    gradeAverage.style.margin = "0";
+    gradeAverage.style.marginTop = "15px";
+    gradeAverage.innerHTML = "Ø ";
+    gradeAverage.appendChild(semesterSpan);
+    gradeAverage.appendChild(yearSpan);
+    gradeAverage.appendChild(totalSpan);
+    stats.appendChild(gradeAverage);
 }
 
-function subjects_are_loaded() {
+function subjectsAreLoaded() {
     if (document.getElementById("studentSubjectApp") !== null) {
         if (document.getElementsByClassName("student-statistics row") !== null) {
             if (document.getElementsByTagName("grade-isolated").length > 0) return true;
@@ -139,23 +124,18 @@ function enableGradeAverage() {
     // if the grades-button is clicked, wait for the grades to load
     if (!document.location.href.endsWith("login")) {
         document.getElementsByClassName("v2-main-navigation main-navigation-show-mobile")[0].childNodes[6].onclick = function () {
-            waitfor(subjects_are_loaded, true, 50, function () {
-                calculate_grades();
+            waitfor(subjectsAreLoaded, true, 50, function () {
+                calculateGrades();
             });
         };
     }
 
     // do one grade calculation, in case the user navigates to the subjects-page via link or refresh
     if (document.location.href.endsWith("#student/subjects")) {
-        waitfor(subjects_are_loaded, true, 50, function() {
-            calculate_grades();
+        waitfor(subjectsAreLoaded, true, 50, function() {
+            calculateGrades();
         });
     }
 }
 
-// send a message requesting the average setting, enable grade average if response is true
-function handleResponse(message) {
-    if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
-    if (message.response === true) enableGradeAverage();
-}
-chrome.runtime.sendMessage({setting: "average"}, handleResponse);
+getSettingState("average", enableGradeAverage);

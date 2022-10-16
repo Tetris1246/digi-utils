@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch -->
+    <title>rooms</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="312" height="660.925781"></rect>
+        <filter x="-6.1%" y="-2.6%" width="112.2%" height="105.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.549160289   0 0 0 0 0.549160289   0 0 0 0 0.549160289  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Teacher-Default" transform="translate(-46.000000, -201.000000)">
+            <g id="Rectangle">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#424859" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+            <g id="rooms" transform="translate(46.000000, 201.000000)">
+                <rect id="Rectangle-15-Copy-3" x="0" y="0" width="30" height="30"></rect>
+                <g id="rooms_icon" transform="translate(3.000000, 4.000000)" fill-rule="nonzero" fill="#F7BF4F">
+                    <path d="M22.9912196,20.0826918 L20.4981958,20.0826918 L20.4981958,0 L3.32403175,0 L3.32403175,20.0826918 L0.831007937,20.0826918 C0.443204233,20.0826918 0.138501323,20.3873947 0.138501323,20.7751984 C0.138501323,21.1630021 0.443204233,21.467705 0.831007937,21.467705 L9.55659127,21.467705 L9.55659127,16.6201587 L14.2656362,16.6201587 L14.2656362,21.467705 L22.9912196,21.467705 C23.3790233,21.467705 23.6837262,21.1630021 23.6837262,20.7751984 C23.6837262,20.3873947 23.3790233,20.0826918 22.9912196,20.0826918 Z M10.886204,14.4041376 L6.177159,14.4041376 L6.177159,9.69509259 L10.886204,9.69509259 L10.886204,14.4041376 Z M10.886204,8.03307672 L6.177159,8.03307672 L6.177159,3.32403175 L10.886204,3.32403175 L10.886204,8.03307672 Z M17.5342675,14.4041376 L12.8252225,14.4041376 L12.8252225,9.69509259 L17.5342675,9.69509259 L17.5342675,14.4041376 Z M17.5342675,8.03307672 L12.8252225,8.03307672 L12.8252225,3.32403175 L17.5342675,3.32403175 L17.5342675,8.03307672 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

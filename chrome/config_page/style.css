@@ -1,0 +1,88 @@
+body {
+    background-color: #373737;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.box {
+    background-color: #2f2f2f;
+    width: 400px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.box-label {
+    font-weight: bold;
+    width: 400px;
+    display:inline;
+    color: #bfbfbf;
+}
+
+.box-description-label {
+    font-size: 12.5px;
+    width: 400px;
+    border-bottom: 1px solid #686868; 
+    display:inline-block;
+    color: #bfbfbf;
+}
+
+.box-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 7.5px;
+    background-color: #2c2c2c;
+    padding: 5px;
+    border-radius: 3px;
+    color: #bfbfbf;
+}
+
+.box-item-label {
+    display: block;
+    font-size: 14px;
+    color: #bfbfbf;
+}
+
+.checkbox-css {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #2c2c2c;
+    border-radius: 3px;
+    border: 1px solid #ffffff;
+}
+
+.checkbox-css:disabled {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    color: #ff3434;
+    border-radius: 3px;
+    border: 1px solid rgb(255, 0, 0);
+}
+
+.text-css:enabled, .password-css:enabled {
+    display: inline-block;
+    width: 300px;
+    height: 20px;
+    background-color: #464646;
+    border-radius: 3px;
+    border: 1px solid #ffffff;
+    color: #bfbfbf;
+}
+
+.text-css:disabled, .password-css:disabled {
+    display: inline-block;
+    width: 300px;
+    height: 20px;
+    background-color: #2c2c2c;
+    border-radius: 3px;
+    border: 1px solid #9d0000;
+    color: #797979;
+}
+
+.box.checkbox {
+    display: inline;
+}
+.logo {
+    width: 200px;
+    margin: 0 20px;
+}

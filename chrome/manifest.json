@@ -13,9 +13,9 @@
   "content_scripts": [
     {
       "matches": ["*://*.digitalesregister.it/*"],
-      "js": ["content/grade_average.js", "content/color_theme.js"],
+      "js": ["content/utils.js", "content/grade_average.js", "content/color_theme.js", "content/limitis_fix.js", "content/anti_afk.js", "content/icons.js", "content/report_card_average.js", "content/auto_login.js"],
       "run-at": "document_end"
-    }
+    } 
   ],
 
   "background": {
@@ -36,7 +36,8 @@
   ],
 
   "web_accessible_resources": [
-    "css/*"
+    "css/*",
+    "icons/*"
   ]
 }
 

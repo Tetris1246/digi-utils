@@ -1,5 +1,6 @@
 html, body {
     width: 220px;
+    min-height: 3em;
     background: #2a2a2a;
 }
 
@@ -12,4 +13,41 @@ label {
 
 hspace {
     width: 30px;
+}
+
+.warning {
+    height: 14px;
+    width: 14px;
+}
+
+.big-icon {
+    display: block;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+.big-text {
+    display: block;
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.5em;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10px;
+}
+.button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    background-color: #3a3a3a;
+    color: #ffffff;
+}
+
+.settings-icon {
+    height: 3em;
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
 }
