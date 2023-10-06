@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Digi-Utils",
-  "version": "1.3.1",
+  "version": "1.4.0",
 
   "description": "Various Utilities for digitalesregister.it",
 
@@ -13,7 +13,19 @@
   "content_scripts": [
     {
       "matches": ["*://*.digitalesregister.it/*"],
-      "js": ["content/utils.js" ,"content/grade_average.js", "content/color_theme.js", "content/limitis_fix.js", "content/anti_afk.js", "content/icons.js", "content/report_card_average.js", "content/auto_login.js"],
+      "js": [
+        "lib/Chart.bundle.js",
+
+        "content/utils.js",
+        "content/grade_average.js",
+        "content/color_theme.js",
+        "content/limitis_fix.js",
+        "content/anti_afk.js",
+        "content/icons.js",
+        "content/report_card_average.js",
+        "content/auto_login.js",
+        "content/grade_chart.js"
+      ],
       "run_at": "document_end"
     }
   ],

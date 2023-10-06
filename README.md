@@ -24,12 +24,14 @@ Digi-Utils has both a Firefox and a Chrome version. All developement and minor c
 ## Features:
 - dark theme
 - grade average
+- grade chart
 - toggle features on/off
 - anti-afk
 - fancy icons
 - report card average
-- auto login
+- auto login (with and without auto-fill)
 
 ## To-Do:
 - language settings
 - multiple color themes
+- better Teachino implementation

@@ -11,7 +11,13 @@ var default_settings = {
     average: {
         value: true,
         description: "Displays the grade average in the evaluation tab",
-        title: "Grade average",
+        title: "Grade Average",
+        inputs: {}
+    },
+    chart: {
+        value: true,
+        description: "Adds a grade chart to the evaluation tab",
+        title: "Grade Chart",
         inputs: {}
     },
     antiafk: {
@@ -31,15 +37,22 @@ var default_settings = {
         description: "Logs you in automatically (warning: the login data is stored unencrypted in the browser memory)",
         title: "Autologin",
         inputs: {
+            only_click: {
+                title: "Only Click (no auto fill in)",
+                input: {
+                    type: "checkbox",
+                    value: "true"
+                }
+            },
             username: {
-                title: "Username",
+                title: "Username (not needed if only click is enabled)",
                 input: {
                     type: "text",
                     value: ""
                 }
             },
             password: {
-                title: "Password",
+                title: "Password (not needed if only click is enabled)",
                 input: {
                     type: "password",
                     value: ""
