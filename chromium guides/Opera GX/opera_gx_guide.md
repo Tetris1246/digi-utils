@@ -1,7 +1,7 @@
 ## Installation guide for:
 # <img src="images/logo.png" height="25"> Opera GX
 
-1. Download the extension from [here](https://codeload.github.com/menga-team/digi-utils/zip/refs/heads/main).
+1. Download the extension from [here](https://codeload.github.com/Tetris1246/digi-utils/zip/refs/heads/main).
 
 2. unzip the file. there should be a "digi-utils" folder.
 
