@@ -7,23 +7,32 @@ function getGrades(callback) {
     });
 }
 
-function getCompleteDatasets(json, allowedSemesters = [1, 2]) {
+function getCompleteDatasets(json, allowedSemesters = [1, 2], averageIncluded, colorTheme) {
     let datasets = [];
+    let averageGrades = [];
+    let averagesAtGrades = [];
     for (let subject of json.subjects) {
         if (subject.grades.length > 0) {
 
             let data = [];
+            let averageData = [];
 
             for (let gradeInfo of subject.grades) {
                 if (gradeInfo.cancelledTimeStamp == null) {
                     if (allowedSemesters.includes(Number(gradeInfo.semester))) {
                         data.push({
-                        x: gradeInfo.date,
-                        y: gradeInfo.grade
-                    });
+                            x: gradeInfo.date,
+                            y: gradeInfo.grade
+                        });
+                        if (averageIncluded) {
+                            averageData.push({
+                                x: gradeInfo.date,
+                                y: gradeInfo.grade,
+                                weight: gradeInfo.weight
+                            });
+                        }
                     }
                 }
-                
             }
 
             let subIndex = json.subjects.indexOf(subject);
@@ -35,13 +44,52 @@ function getCompleteDatasets(json, allowedSemesters = [1, 2]) {
                 data: data,
                 fill: false
             }
+            if (averageIncluded)
+                averageGrades = averageGrades.concat(averageData);
 
             datasets.push(subjectData);
         }
     }
+
+    if (averageIncluded) {
+        averageGrades.sort((a, b) => {
+            const dateA = new Date(a.x);
+            const dateB = new Date(b.x);
+            return dateA - dateB;
+        });
+
+        for(let i=0; i<averageGrades.length; i++) {
+            averagesAtGrades.push({
+                x: averageGrades[i].x,
+                y: calculateAverage(getAllBefore(averageGrades, i+1))
+            })
+        }
+
+        let averages = {
+            label:"Durchschnitt",
+            borderColor: colorTheme.average,
+            data: averagesAtGrades,
+            fill: false
+        }
+        datasets.push(averages);
+    }
     return datasets;
 }
 
+function getAllBefore(arr, index) {
+    return arr.slice(0, index);
+}
+function calculateAverage(list) {
+    let totalTotal = 0;
+    let totalWeight = 0;
+
+    for (item of list) {
+        totalTotal += item.y*(item.weight/100);
+        totalWeight += (item.weight/100);
+    }
+
+    return (totalTotal/totalWeight).toFixed(2);
+}
 function createChart(json, canvas, allowedSemesters, colorTheme) {
     Chart.defaults.global.defaultFontColor = colorTheme.defaultFontColor;
     Chart.Legend.prototype.afterFit = function() {
@@ -50,7 +98,7 @@ function createChart(json, canvas, allowedSemesters, colorTheme) {
     return new Chart(canvas, {
         type: 'line',
         data: {
-            datasets: getCompleteDatasets(json, allowedSemesters)
+            datasets: getCompleteDatasets(json, allowedSemesters, document.getElementById("averageCheckbox").checked, colorTheme)
         },
         options: {
             responsive: true,
@@ -124,6 +172,9 @@ function renderChart(requestObject, colorTheme) {
     let container = document.createElement("div");
     let chartContainer = document.createElement("div");
     let chartCanvas = document.createElement("canvas");
+    let averageEnabled = document.createElement("div");
+    let averageText = document.createElement("span");
+    let averageCheckbox = document.createElement("input");
     let semesterSelector = document.createElement("select");
     let expandButton = document.createElement("img");
 
@@ -134,6 +185,25 @@ function renderChart(requestObject, colorTheme) {
     semesterSelector.style.borderColor = colorTheme.semesterSelectorBackgroundColor;
     semesterSelector.style.borderRadius = "5px";
     semesterSelector.id = "semesterSelection";
+
+    averageEnabled.style.backgroundColor = colorTheme.semesterSelectorBackgroundColor;
+    averageEnabled.style.margin = "10px";
+    averageEnabled.style.float = "right";
+    averageEnabled.style.padding = "5px";
+    averageEnabled.style.borderColor = colorTheme.semesterSelectorBackgroundColor;
+    averageEnabled.style.borderRadius = "5px";
+    averageEnabled.style.height = "31px";
+    averageEnabled.id = "averageEnabled";
+
+    averageText.textContent = "Durchschnitt";
+
+    averageCheckbox.checked = true;
+    averageCheckbox.id = "averageCheckbox";
+    averageCheckbox.type = "checkbox";
+    averageCheckbox.style.margin = "5px";
+
+    averageEnabled.appendChild(averageText);
+    averageEnabled.appendChild(averageCheckbox);
 
     for (let selection of ["1. Semester", "2. Semester", "Beide Semester"]) {
         let option = document.createElement("option");
@@ -162,6 +232,7 @@ function renderChart(requestObject, colorTheme) {
 
     chartContainer.appendChild(chartCanvas);
     container.appendChild(expandButton);
+    container.appendChild(averageEnabled);
     container.appendChild(semesterSelector);
     container.appendChild(chartContainer);
 
@@ -182,8 +253,13 @@ function renderChart(requestObject, colorTheme) {
         expandButton.onclick = expand;
     }
 
+    averageCheckbox.onchange = function() {
+        chart.data.datasets = getCompleteDatasets(requestObject, getSelectedSemester(), document.getElementById("averageCheckbox").checked, colorTheme);
+        chart.update();
+    };
+
     semesterSelector.onchange = function() {
-        chart.data.datasets = getCompleteDatasets(requestObject, getSelectedSemester());
+        chart.data.datasets = getCompleteDatasets(requestObject, getSelectedSemester(), document.getElementById("averageCheckbox").checked, colorTheme);
         chart.update();
     };
 
@@ -220,7 +296,8 @@ function getLightTheme() {
         backgroundColor: "rgb(255, 255, 255)",
         semesterSelectorBackgroundColor: "rgb(242, 248, 251)",
         gridLines: "rgb(204,204,204)",
-        defaultFontColor: "rgb(71, 78, 96)"
+        defaultFontColor: "rgb(71, 78, 96)",
+        average: "rgb(190, 190, 190)"
     }
 }
 
@@ -230,7 +307,8 @@ function getDarkTheme() {
         backgroundColor: "rgb(48, 48, 48)",
         semesterSelectorBackgroundColor: "rgb(39, 39, 39)",
         gridLines: "rgb(122, 122, 122)",
-        defaultFontColor: "rgb(255, 255, 255)"
+        defaultFontColor: "rgb(255, 255, 255)",
+        average: "rgb(105,105,105)"
     }
 }
 
