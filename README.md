@@ -13,7 +13,7 @@ Feel free to report issues or request new features.
 Digi-Utils has both a Firefox and a Chrome version. All developement and minor changes will be done to the Firefox version, and only major updates get ported over to Chrome.
 
 ## Get the Extension:
--  [<img src="chromium%20guides/firefox.png" height="15"> Firefox](https://addons.mozilla.org/en-US/firefox/addon/digi-utils/)
+-  [<img src="chromium%20guides/firefox.png" height="15"> Firefox](https://github.com/Tetris1246/digi-utils/releases/latest)
 -  [<img src="chromium%20guides/Google%20Chrome/images/logo.png" height="15"> Chrome](chromium%20guides/Google%20Chrome/chrome_guide.md)
 -  [<img src="chromium%20guides/Microsoft%20Edge/images/logo.png" height="15"> Edge](chromium%20guides/Microsoft%20Edge/edge_guide.md)
 -  [<img src="chromium%20guides/Brave/images/logo.png" height="15"> Brave](chromium%20guides/Brave/brave_guide.md)
