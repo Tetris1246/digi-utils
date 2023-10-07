@@ -4,6 +4,11 @@ function getSettingState(setting, callFunction) {
     }, function(e){console.error(e)});
 }
 
+function settingEnabled(setting, callFunction) {
+    browser.runtime.sendMessage({"getSettingState": {"setting": setting}}).then(function(message) {
+        callFunction(message.response);
+    }, function(e){console.error(e)});
+}
 
 // https://stackoverflow.com/questions/7193238/wait-until-a-condition-is-true
 // test: function that returns a value

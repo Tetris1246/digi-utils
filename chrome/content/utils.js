@@ -5,6 +5,13 @@ function getSettingState(setting, callFunction) {
     });
 }
 
+function settingEnabled(setting, callFunction) {
+    chrome.runtime.sendMessage({"getSettingState": {"setting": setting}}, function (message) {
+        if (chrome.runtime.lastError) console.error(chrome.runtime.lastError);
+        callFunction(message.response);
+    });
+}
+
 
 // https://stackoverflow.com/questions/7193238/wait-until-a-condition-is-true
 // test: function that returns a value

@@ -42,17 +42,19 @@ function getCompleteDatasets(json, allowedSemesters = [1, 2]) {
     return datasets;
 }
 
-function createChart(json, canvas, allowedSemesters) {
-    Chart.defaults.global.defaultFontColor = "rgb(255,255,255)";
+function createChart(json, canvas, allowedSemesters, colorTheme) {
+    Chart.defaults.global.defaultFontColor = colorTheme.defaultFontColor;
     Chart.Legend.prototype.afterFit = function() {
         this.height = this.height + 50;
     };
-    new Chart(canvas, {
+    return new Chart(canvas, {
         type: 'line',
         data: {
             datasets: getCompleteDatasets(json, allowedSemesters)
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             elements: {
                 line: {
                     tension: 0
@@ -67,7 +69,7 @@ function createChart(json, canvas, allowedSemesters) {
                             max:10
                             },
                             gridLines: {
-                                color: "rgb(122,122,122)"
+                                color: colorTheme.gridLines
                             }
                         }
                     ],
@@ -83,7 +85,7 @@ function createChart(json, canvas, allowedSemesters) {
                         tooltipFormat: 'DD.MM.YY'
                         },
                         gridLines: {
-                            color: "rgb(122,122,122)"
+                            color: colorTheme.gridLines
                         }
                     }
                 ]
@@ -116,25 +118,22 @@ function createChart(json, canvas, allowedSemesters) {
     });
 }
 
-function renderChart(requestObject) {
+function renderChart(requestObject, colorTheme) {
     let domain = document.location.href.match(/^[\w-]+:\/{2,}\[?([\w\.:-]+)\]?(?::[0-9]*)?/)[1];
 
     let container = document.createElement("div");
     let chartContainer = document.createElement("div");
-    let chart = document.createElement("canvas");
+    let chartCanvas = document.createElement("canvas");
     let semesterSelector = document.createElement("select");
     let expandButton = document.createElement("img");
-    let collapseButton = document.createElement("img");
 
-    semesterSelector.style.backgroundColor = "#272727";
+    semesterSelector.style.backgroundColor = colorTheme.semesterSelectorBackgroundColor;
     semesterSelector.style.margin = "10px";
+    semesterSelector.style.float = "right";
     semesterSelector.style.padding = "5px";
-    semesterSelector.style.borderColor = "#272727";
+    semesterSelector.style.borderColor = colorTheme.semesterSelectorBackgroundColor;
     semesterSelector.style.borderRadius = "5px";
     semesterSelector.id = "semesterSelection";
-    semesterSelector.onchange = function() {
-        createChart(requestObject, document.getElementById("chart"), getSelectedSemester());
-    };
 
     for (let selection of ["1. Semester", "2. Semester", "Beide Semester"]) {
         let option = document.createElement("option");
@@ -146,57 +145,49 @@ function renderChart(requestObject) {
     }
 
     container.style.padding = "8px 20px";
-    container.style.background = "#303030";
     container.style.borderRadius = "5px";
-    container.style.backgroundColor = "#303030";
+    container.style.backgroundColor = colorTheme.backgroundColor;
     container.style.marginTop = "10px";
 
-    expandButton.src = `https://${domain}/v2/theme/icons/expand.svg`;
     expandButton.style.backgroundSize = "cover";
     expandButton.style.width = "28px";
     expandButton.style.height = "28px";
     expandButton.style.borderRadius = "50%";
-    expandButton.style.backgroundColor = "#202020";
     expandButton.style.margin = "5px auto";
-    expandButton.style.filter = "invert(81%)";
+    if (colorTheme.dark)
+        expandButton.style.filter = "invert(81%)";
 
-    expandButton.addEventListener("click", function() {
-        bigChart();
-        expandButton.style.visibility = "hidden";
-        collapseButton.style.visibility = "visible";
-    });
 
-    collapseButton.src = `https://${domain}/v2/theme/icons/collapse.svg`;
-    collapseButton.style.visibility = "hidden";
-    collapseButton.style.backgroundSize = "cover";
-    collapseButton.style.width = "28px";
-    collapseButton.style.height = "28px";
-    collapseButton.style.borderRadius = "50%";
-    collapseButton.style.backgroundSize = "cover";
-    collapseButton.style.backgroundColor = "#202020";
-    collapseButton.style.margin = "5px auto";
-    collapseButton.style.filter = "invert(81%)";
+    chartCanvas.id = "chart";
 
-    collapseButton.addEventListener("click", function() {
-        smallChart();
-        expandButton.style.visibility = "visible";
-        collapseButton.style.visibility = "hidden";
-    });
-
-    
-    chart.id = "chart";
-
-    chartContainer.appendChild(chart);
+    chartContainer.appendChild(chartCanvas);
+    container.appendChild(expandButton);
     container.appendChild(semesterSelector);
     container.appendChild(chartContainer);
 
-    container.appendChild(expandButton);
-    container.appendChild(collapseButton);
-
     document.getElementById("chartContainer").appendChild(container);
 
-    createChart(requestObject, document.getElementById("chart"), getSelectedSemester());
-    smallChart();
+    let chart = createChart(requestObject, document.getElementById("chart"), getSelectedSemester(), colorTheme);
+    smallChart(chart);
+
+    let expand = function() {
+        bigChart(chart);
+        expandButton.src = `https://${domain}/v2/theme/icons/collapse.svg`;
+        expandButton.onclick = collapse;
+    }
+
+    let collapse = function() {
+        smallChart(chart);
+        expandButton.src = `https://${domain}/v2/theme/icons/expand.svg`;
+        expandButton.onclick = expand;
+    }
+
+    semesterSelector.onchange = function() {
+        chart.data.datasets = getCompleteDatasets(requestObject, getSelectedSemester());
+        chart.update();
+    };
+
+    collapse();
 }
 
 function getSelectedSemester() {
@@ -204,14 +195,43 @@ function getSelectedSemester() {
     return value == "1. Semester" ? [1] : value == "2. Semester" ? [2] : [1, 2];
 }
 
-function smallChart() {
-    let chart = document.getElementById("chart");
-    chart.style.height = "150px";
+function smallChart(chart) {
+    chart.canvas.parentNode.style.height = "150px";
+    chart.resize();
+    chart.options.legend.display = false;
+    Chart.Legend.prototype.afterFit = function() {
+        this.height = this.height - 50;
+    };
+    chart.update();
 }
 
-function bigChart() {
-    let chart = document.getElementById("chart");
-    chart.style.height = "auto";
+function bigChart(chart) {
+    chart.canvas.parentNode.style.height = "760px";
+    chart.resize();
+    chart.options.legend.display = true;
+    Chart.Legend.prototype.afterFit = function() {
+        this.height = this.height + 50;
+    };
+    chart.update();
+}
+function getLightTheme() {
+    return {
+        dark: false,
+        backgroundColor: "rgb(255, 255, 255)",
+        semesterSelectorBackgroundColor: "rgb(242, 248, 251)",
+        gridLines: "rgb(204,204,204)",
+        defaultFontColor: "rgb(71, 78, 96)"
+    }
+}
+
+function getDarkTheme() {
+    return {
+        dark: true,
+        backgroundColor: "rgb(48, 48, 48)",
+        semesterSelectorBackgroundColor: "rgb(39, 39, 39)",
+        gridLines: "rgb(122, 122, 122)",
+        defaultFontColor: "rgb(255, 255, 255)"
+    }
 }
 
 function showChart() {
@@ -228,7 +248,12 @@ function showChart() {
     container.appendChild(chartContainer);
     
     getGrades(function(requestObject) {
-        renderChart(requestObject);
+        settingEnabled("dark", function(enabled) {
+            if (enabled)
+                renderChart(requestObject, getDarkTheme());
+            else
+                renderChart(requestObject, getLightTheme());
+        });
     });
 }
 
